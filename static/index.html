@@ -230,8 +230,21 @@ async function refresh() {
   else if (r.status === 404) { leaveTrip(); banner("This trip no longer exists.", true); }
 }
 async function copy(text, label) {
-  try { await navigator.clipboard.writeText(text); banner(label + " copied."); }
-  catch (e) { banner("Copy failed. Select and copy it manually.", true); }
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+    } else {
+      // Fallback for plain http:// pages, where the modern clipboard API is blocked
+      const ta = document.createElement("textarea");
+      ta.value = text; ta.setAttribute("readonly", "");
+      ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0, text.length);
+      const ok = document.execCommand("copy");
+      ta.remove();
+      if (!ok) throw new Error("copy failed");
+    }
+    banner(label + " copied.");
+  } catch (e) { banner("Copy failed. Select and copy it manually.", true); }
 }
 $("createBtn").onclick = createTrip;
 $("joinBtn").onclick = () => joinTrip($("jCode").value);
