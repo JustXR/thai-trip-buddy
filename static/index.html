@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thailand Trip Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Noto+Serif+Thai:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#faf7f2;--card:#fff;--text:#1f2430;--muted:#6b7280;--accent:#F9D84A;--on-accent:#1f2430;--line:#e8e2d9}
+@media (prefers-color-scheme:dark){:root{--bg:#16181d;--card:#1f232b;--text:#eceef2;--muted:#9aa3b2;--line:#2e3340}}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{margin:0;background:transparent;color:var(--text);font-family:"Source Serif 4",Georgia,"Times New Roman",serif;font-size:1.05rem;line-height:1.5}
+main{max-width:600px;margin:0 auto;padding:16px 16px 130px}
+h1{font-size:1.3rem}
+.flag{vertical-align:-3px;margin-right:8px;border-radius:3px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+label{display:block;font-size:.85rem;color:var(--muted);margin-top:8px}
+input,select,textarea{width:100%;padding:9px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);font:inherit}
+.go{margin-top:12px;padding:10px 16px;background:var(--accent);color:var(--on-accent);border:none;border-radius:10px;cursor:pointer;font:inherit;font-weight:600}
+.go.ghost{background:var(--card);color:var(--text);border:1px solid var(--line);font-weight:500}
+.go:disabled{opacity:.6;cursor:wait}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.code{font-family:monospace;font-size:1.8rem;font-weight:700;letter-spacing:.15em;margin:6px 0}
+.note{font-size:.8rem;color:var(--muted);margin:10px 0 0}
+.item{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--line)}
+.x{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1rem;font-family:inherit}
+.banner{padding:10px 12px;border-radius:10px;margin-bottom:12px;background:var(--accent);color:var(--on-accent)}
+.banner.err{background:#dc2626;color:#fff}
+.out{white-space:pre-wrap;margin-top:12px}
+.err{color:#dc2626}
+.md{white-space:normal;margin-top:14px}
+.md>*{animation:rise .55s cubic-bezier(.2,.7,.2,1) both;animation-delay:min(calc(var(--i,0)*80ms),1200ms)}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.md-title{font-size:1.35rem;margin:6px 0 12px;padding-bottom:6px;border-bottom:3px solid var(--accent);display:inline-block}
+.md-intro p{margin:0 0 10px}
+.md-card{background:var(--bg);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:12px;padding:12px 14px;margin:0 0 12px;transition:transform .2s,box-shadow .2s}
+.md-card:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.12)}
+.md-card h3{margin:0 0 6px;font-size:1.1rem}
+.md ul,.md ol{margin:6px 0 4px;padding:0;list-style:none}
+.md li{position:relative;padding:3px 0 3px 24px}
+.md ul li::before{content:"";position:absolute;left:5px;top:.8em;width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.md ol{counter-reset:n}
+.md ol li{counter-increment:n}
+.md ol li::before{content:counter(n);position:absolute;left:0;top:4px;width:19px;height:19px;border-radius:50%;background:var(--accent);color:var(--on-accent);font-size:.75rem;font-weight:700;display:flex;align-items:center;justify-content:center}
+body .md strong{font-weight:700;background:none}
+.price{display:inline-block;padding:0 8px;border-radius:999px;background:var(--accent);color:var(--on-accent);font-weight:600;font-size:.9em;white-space:nowrap}
+.typing{display:flex;align-items:center;gap:6px;color:var(--muted)}
+.typing i{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:bounce 1s infinite ease-in-out}
+.typing i:nth-of-type(2){animation-delay:.15s}
+.typing i:nth-of-type(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.5}40%{transform:translateY(-6px);opacity:1}}
+@media (prefers-reduced-motion:reduce){.md>*{animation:none}.typing i{animation:none}.md-card{transition:none}}
+#beams{position:fixed;top:-60px;left:-60px;width:calc(100% + 120px);height:calc(100% + 120px);z-index:-1;pointer-events:none;filter:blur(30px)}
+.dock{position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:20;display:flex;align-items:flex-end;gap:8px;padding:8px 10px;border-radius:22px;background:color-mix(in srgb,var(--card) 78%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid var(--line);box-shadow:0 10px 30px rgba(0,0,0,.18)}
+.dock button{position:relative;width:48px;height:48px;padding:0;border:1px solid var(--line);border-radius:14px;background:var(--card);color:var(--text);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none;font:inherit}
+.dock button svg{width:var(--ic,24px);height:var(--ic,24px);fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.dock button.on{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.dock button::after{content:attr(data-label);position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%);padding:3px 9px;border-radius:8px;background:var(--text);color:var(--bg);font-size:.78rem;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s}
+.dock button:hover::after,.dock button:focus-visible::after{opacity:1}
+.dock .lbl{display:none;font-size:.62rem;line-height:1;margin-top:3px}
+@media (hover:none){.dock button{height:56px}.dock button::after{display:none}.dock .lbl{display:block}.dock button svg{width:22px;height:22px}}
+.big{font-size:1.25rem;margin:0 0 6px}
+.seg,.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.chips{flex-wrap:nowrap;overflow-x:auto;margin:0 0 12px;padding-bottom:4px}
+.seg button,.chips button{padding:7px 12px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--text);cursor:pointer;font:inherit;font-size:.88rem;white-space:nowrap}
+.seg button.on,.chips button.on{background:var(--accent);color:var(--on-accent);border-color:var(--accent);font-weight:600}
+.phrase{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.th{font-family:"Noto Serif Thai","Source Serif 4",serif;font-size:1.45rem;font-weight:600;line-height:1.35}
+.rom{font-style:italic;font-weight:600;opacity:.9}
+.en{color:var(--muted);font-size:.95rem}
+.particle{background:var(--accent);color:var(--on-accent);border-radius:6px;padding:0 5px;margin-left:2px;font-style:normal;font-weight:600}
+.play{border:none;background:var(--accent);color:var(--on-accent);border-radius:50%;width:42px;height:42px;font-size:1rem;cursor:pointer;flex:none}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<canvas id="beams" aria-hidden="true"></canvas>
+<main>
+<h1><svg class="flag" viewBox="0 0 9 6" width="32" height="21" role="img" aria-label="Thailand flag"><rect width="9" height="6" fill="#A51931"/><rect y="1" width="9" height="4" fill="#F4F5F8"/><rect y="2" width="9" height="2" fill="#2D2A4A"/></svg>Thailand Trip Guide</h1>
+<div id="banner" class="banner" hidden></div>
+<section id="trip">
+  <div id="tripNone">
+    <div class="card"><b>Start a new trip</b>
+      <label>Trip name</label><input id="tName" value="Thailand trip" maxlength="60">
+      <label>Travelers (comma separated)</label><input id="tPeople" value="Me, Friend 1, Friend 2">
+      <button class="go" id="createBtn">Create trip</button>
+    </div>
+    <div class="card"><b>Join with a code</b>
+      <label>Trip code</label><input id="jCode" placeholder="e.g. K7M2QX4P" maxlength="8" autocapitalize="characters" autocomplete="off">
+      <button class="go" id="joinBtn">Join trip</button>
+    </div>
+  </div>
+  <div id="tripIn" hidden>
+    <div class="card"><b id="tTitle"></b>
+      <label>Share this code with your travel companions</label>
+      <div class="code" id="tCode"></div>
+      <div class="row">
+        <button class="go" id="copyCode">Copy code</button>
+        <button class="go ghost" id="copyLink">Copy link</button>
+        <button class="go ghost" id="leaveBtn">Leave trip</button>
+      </div>
+      <p class="note">Anyone with this code can view and edit the trip, so don't put private information in it.</p>
+    </div>
+  </div>
+</section>
+
+<section id="plan" class="card" hidden>
+  <label>Days</label><input id="days" type="number" min="1" max="30" value="5">
+  <label>Region</label><input id="region" value="Bangkok and Chiang Mai">
+  <label>Budget</label>
+  <select id="budget"><option>Low</option><option selected>Medium</option><option>High</option></select>
+  <label>Interests</label><input id="interests" value="food, temples, nature">
+  <button class="go" id="planBtn">Create plan</button>
+  <p class="note" id="planNote" hidden>The plan is saved to your trip, so your companions see it too.</p>
+  <div class="out" id="planOut"></div>
+</section>
+
+<section id="ask" class="card" hidden>
+  <label>Your question</label>
+  <textarea id="q" rows="3" placeholder="e.g. How much should a taxi from the airport cost?"></textarea>
+  <button class="go" id="askBtn">Ask</button>
+  <div class="out" id="askOut"></div>
+</section>
+
+<section id="phrases" hidden>
+  <div class="card">
+    <h2 class="big">Speak a little Thai.</h2>
+    <p style="margin:0">Thais love it when you try — even if you get the tones wrong. End sentences politely with “khrab” if you’re a man, or “kha” if you’re a woman.</p>
+    <label>Add the polite ending for me</label>
+    <div class="seg" id="seg">
+      <button data-p="man">Man · khrab</button>
+      <button data-p="woman">Woman · kha</button>
+      <button data-p="none">None</button>
+    </div>
+  </div>
+  <div class="chips" id="pChips"></div>
+  <div id="pList"></div>
+</section>
+
+<section id="money" hidden>
+  <div id="moneyNone" class="card">Create or join a trip first (Trip tab) to share expenses with your companions.</div>
+  <div id="moneyIn" hidden>
+    <div class="card"><b>Add expense</b> <span class="note">(split equally, THB)</span>
+      <label>Description</label><input id="desc" placeholder="Dinner" maxlength="60">
+      <label>Amount (THB)</label><input id="amt" type="number" min="0" step="0.01">
+      <label>Paid by</label><select id="payer"></select>
+      <button class="go" id="addBtn">Add expense</button>
+    </div>
+    <div class="card"><b>Expenses</b><div id="list"></div></div>
+    <div class="card"><b>Who owes whom</b><div id="settle"></div></div>
+    <div class="card"><b>Travelers</b>
+      <input id="editPeople" aria-label="Travelers">
+      <button class="go ghost" id="savePeople">Save travelers</button>
+    </div>
+  </div>
+</section>
+</main>
+<nav class="dock" aria-label="Main">
+  <button data-t="trip" class="on" data-label="Trip" aria-label="Trip"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg><span class="lbl">Trip</span></button>
+  <button data-t="plan" data-label="Plan" aria-label="Plan"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span class="lbl">Plan</span></button>
+  <button data-t="ask" data-label="Ask a local" aria-label="Ask a local"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg><span class="lbl">Ask</span></button>
+  <button data-t="phrases" data-label="Thai phrases" aria-label="Thai phrases"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg><span class="lbl">Thai</span></button>
+  <button data-t="money" data-label="Expenses" aria-label="Expenses"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg><span class="lbl">Expenses</span></button>
+</nav>
+
+<script>
+const $ = id => document.getElementById(id);
+let trip = null, generating = false, bannerTimer = null;
+
+const store = {
+  get() { try { return localStorage.getItem("tripCode"); } catch (e) { return null; } },
+  set(v) { try { v ? localStorage.setItem("tripCode", v) : localStorage.removeItem("tripCode"); } catch (e) {} }
+};
+
+function banner(text, isErr) {
+  const b = $("banner");
+  b.textContent = text; b.className = "banner" + (isErr ? " err" : ""); b.hidden = false;
+  clearTimeout(bannerTimer); bannerTimer = setTimeout(() => b.hidden = true, 5000);
+}
+
+async function api(method, url, body) {
+  try {
+    const r = await fetch(url, {method, headers: {"Content-Type": "application/json"}, body: body ? JSON.stringify(body) : undefined});
+    const data = await r.json().catch(() => ({}));
+    return {ok: r.ok, status: r.status, data};
+  } catch (e) {
+    return {ok: false, status: 0, data: {error: "Could not reach the server."}};
+  }
+}
+
+// ----- tabs -----
+function show(t) {
+  document.querySelectorAll(".dock button").forEach(x => x.classList.toggle("on", x.dataset.t === t));
+  ["trip", "plan", "ask", "phrases", "money"].forEach(s => $(s).hidden = s !== t);
+  scrollTo({top: 0});
+}
+document.querySelectorAll(".dock button").forEach(b => b.onclick = () => show(b.dataset.t));
+
+// ----- trip -----
+function setTrip(t) {
+  trip = t; store.set(t.code);
+  history.replaceState(null, "", "#" + t.code);
+  renderAll();
+}
+function leaveTrip() {
+  trip = null; store.set(null);
+  history.replaceState(null, "", location.pathname);
+  renderAll();
+}
+async function createTrip() {
+  const people = $("tPeople").value.split(",").map(s => s.trim()).filter(Boolean);
+  const r = await api("POST", "/api/trips", {name: $("tName").value, people});
+  if (!r.ok) return banner(r.data.error || "Could not create the trip.", true);
+  setTrip(r.data); banner("Trip created. Share the code with your companions!");
+}
+async function joinTrip(raw, silent) {
+  const code = String(raw || "").trim().toUpperCase();
+  if (!/^[A-Z0-9]{8}$/.test(code)) { if (!silent) banner("A trip code has 8 letters or numbers.", true); return; }
+  const r = await api("GET", "/api/trips/" + code);
+  if (!r.ok) { if (!silent || r.status === 404) { store.set(null); } if (!silent) banner(r.data.error || "Could not join.", true); return; }
+  setTrip(r.data); if (!silent) banner("Joined " + r.data.name);
+}
+async function refresh() {
+  if (!trip) return;
+  const r = await api("GET", "/api/trips/" + trip.code);
+  if (r.ok) { trip = r.data; renderAll(); }
+  else if (r.status === 404) { leaveTrip(); banner("This trip no longer exists.", true); }
+}
+async function copy(text, label) {
+  try { await navigator.clipboard.writeText(text); banner(label + " copied."); }
+  catch (e) { banner("Copy failed. Select and copy it manually.", true); }
+}
+$("createBtn").onclick = createTrip;
+$("joinBtn").onclick = () => joinTrip($("jCode").value);
+$("leaveBtn").onclick = leaveTrip;
+$("copyCode").onclick = () => trip && copy(trip.code, "Code");
+$("copyLink").onclick = () => trip && copy(location.origin + location.pathname + "#" + trip.code, "Link");
+
+// ----- AI -----
+const PRICE = String.raw`฿\s?\d[\d,]*(?:\s?[-–]\s?\d[\d,]*)?|\d[\d,]*(?:\s?[-–]\s?\d[\d,]*)?\s?(?:THB|baht)\b`;
+const INLINE_SRC = String.raw`\*\*(.+?)\*\*|\*([^*\n]+)\*|(${PRICE})`;
+
+// Inline formatting built with DOM nodes (no innerHTML, so AI text can't inject HTML)
+function inline(parent, text) {
+  const re = new RegExp(INLINE_SRC, "gi");
+  let last = 0, m;
+  while ((m = re.exec(text))) {
+    if (m.index > last) parent.append(text.slice(last, m.index));
+    let el;
+    if (m[1] !== undefined) { el = document.createElement("strong"); inline(el, m[1]); }
+    else if (m[2] !== undefined) { el = document.createElement("em"); el.textContent = m[2]; }
+    else { el = document.createElement("span"); el.className = "price"; el.textContent = m[3]; }
+    parent.append(el); last = re.lastIndex;
+  }
+  if (last < text.length) parent.append(text.slice(last));
+}
+
+// Turns simple Markdown into styled cards, bullets and price chips
+function renderInto(out, text) {
+  out.className = "out md"; out.dataset.raw = text; out.textContent = "";
+  const frag = document.createDocumentFragment();
+  const box = cls => { const d = document.createElement("div"); d.className = cls; frag.appendChild(d); return d; };
+  let cur = box("md-intro"), list = null, para = [];
+  const flushPara = () => {
+    if (!para.length) return;
+    const p = document.createElement("p"); inline(p, para.join(" ")); cur.appendChild(p); para = [];
+  };
+  for (const raw of text.split(/\r?\n/)) {
+    const line = raw.trimEnd();
+    let m;
+    if (!line.trim()) { flushPara(); list = null; continue; }
+    if ((m = line.match(/^(#{1,3})\s+(.*)$/))) {
+      flushPara(); list = null;
+      const title = m[1].length === 1;
+      const h = document.createElement(title ? "h2" : "h3");
+      inline(h, m[2].replace(/\*\*/g, ""));
+      if (title) { h.className = "md-title"; frag.appendChild(h); cur = box("md-intro"); }
+      else { cur = box("md-card"); cur.appendChild(h); }
+      continue;
+    }
+    if ((m = line.match(/^\s*(?:[-*•]|\d+[.)])\s+(.*)$/))) {
+      flushPara();
+      const ordered = /^\s*\d/.test(line);
+      if (!list || list.dataset.ordered !== String(ordered)) {
+        list = document.createElement(ordered ? "ol" : "ul"); list.dataset.ordered = String(ordered); cur.appendChild(list);
+      }
+      const li = document.createElement("li"); inline(li, m[1]); list.appendChild(li);
+      continue;
+    }
+    if (/^\s*-{3,}\s*$/.test(line)) { flushPara(); list = null; continue; }
+    list = null; para.push(line.trim());
+  }
+  flushPara();
+  [...frag.children].forEach(c => { if (c.classList.contains("md-intro") && !c.hasChildNodes()) c.remove(); });
+  [...frag.children].forEach((c, i) => c.style.setProperty("--i", i));
+  out.appendChild(frag);
+}
+
+function showLoading(out) {
+  out.className = "out"; out.textContent = ""; delete out.dataset.raw;
+  const d = document.createElement("div"); d.className = "typing";
+  const label = document.createElement("span"); label.textContent = "Thinking";
+  d.append(label, document.createElement("i"), document.createElement("i"), document.createElement("i"));
+  out.appendChild(d);
+}
+
+async function callApi(url, body, out, btn) {
+  showLoading(out); btn.disabled = true;
+  const r = await api("POST", url, body);
+  btn.disabled = false;
+  if (!r.ok) { out.className = "out err"; out.textContent = r.data.error || "Something went wrong."; return null; }
+  renderInto(out, r.data.answer);
+  return r.data.answer;
+}
+$("planBtn").onclick = async () => {
+  generating = true;
+  const answer = await callApi("/api/plan", {days: $("days").value, region: $("region").value, budget: $("budget").value, interests: $("interests").value}, $("planOut"), $("planBtn"));
+  generating = false;
+  if (answer && trip) {
+    const r = await api("PUT", "/api/trips/" + trip.code + "/plan", {plan: answer});
+    if (r.ok) { trip = r.data; } else banner(r.data.error || "Could not save the plan.", true);
+  }
+};
+$("askBtn").onclick = () => callApi("/api/ask", {question: $("q").value}, $("askOut"), $("askBtn"));
+
+// ----- expenses -----
+async function addExpense() {
+  const amount = parseFloat($("amt").value);
+  if (!trip || !(amount > 0)) return banner("Enter an amount greater than 0.", true);
+  const r = await api("POST", "/api/trips/" + trip.code + "/expenses", {desc: $("desc").value, amount, payer: $("payer").value});
+  if (!r.ok) return banner(r.data.error || "Could not add the expense.", true);
+  trip = r.data; $("desc").value = ""; $("amt").value = ""; renderAll();
+}
+async function delExpense(id) {
+  const r = await api("DELETE", "/api/trips/" + trip.code + "/expenses/" + id);
+  if (r.ok) { trip = r.data; renderAll(); } else banner(r.data.error || "Could not delete.", true);
+}
+async function savePeople() {
+  const people = $("editPeople").value.split(",").map(s => s.trim()).filter(Boolean);
+  const r = await api("PUT", "/api/trips/" + trip.code + "/people", {people});
+  if (r.ok) { trip = r.data; renderAll(); banner("Travelers saved."); } else banner(r.data.error || "Could not save.", true);
+}
+$("addBtn").onclick = addExpense;
+$("savePeople").onclick = savePeople;
+
+// ----- rendering -----
+function renderAll() { renderTrip(); renderPlan(); renderMoney(); }
+
+function renderTrip() {
+  $("tripNone").hidden = !!trip; $("tripIn").hidden = !trip;
+  if (!trip) return;
+  $("tTitle").textContent = trip.name;
+  $("tCode").textContent = trip.code;
+}
+function renderPlan() {
+  $("planNote").hidden = !trip;
+  if (trip && trip.plan && !generating && $("planOut").dataset.raw !== trip.plan) {
+    renderInto($("planOut"), trip.plan);
+  }
+}
+function renderMoney() {
+  $("moneyNone").hidden = !!trip; $("moneyIn").hidden = !trip;
+  if (!trip) return;
+  const ps = trip.people, key = ps.join("|");
+  if ($("payer").dataset.key !== key) {
+    const cur = $("payer").value;
+    $("payer").innerHTML = "";
+    ps.forEach(p => { const o = document.createElement("option"); o.textContent = p; $("payer").appendChild(o); });
+    if (ps.includes(cur)) $("payer").value = cur;
+    $("payer").dataset.key = key;
+  }
+  if (document.activeElement !== $("editPeople")) $("editPeople").value = ps.join(", ");
+
+  $("list").textContent = "";
+  if (!trip.expenses.length) $("list").textContent = "No expenses yet.";
+  trip.expenses.forEach(e => {
+    const row = document.createElement("div"); row.className = "item";
+    const t = document.createElement("span");
+    t.textContent = `${e.desc}: ${e.amount.toFixed(2)} THB (paid by ${e.payer})`;
+    const x = document.createElement("button");
+    x.className = "x"; x.textContent = "✕"; x.setAttribute("aria-label", "Delete expense");
+    x.onclick = () => delExpense(e.id);
+    row.append(t, x); $("list").appendChild(row);
+  });
+
+  const bal = Object.fromEntries(ps.map(p => [p, 0]));
+  trip.expenses.forEach(e => {
+    if (!(e.payer in bal)) return;
+    bal[e.payer] += e.amount;
+    ps.forEach(p => bal[p] -= e.amount / ps.length);
+  });
+  const debt = [], cred = [];
+  Object.entries(bal).forEach(([p, v]) => { if (v < -0.005) debt.push([p, -v]); else if (v > 0.005) cred.push([p, v]); });
+  $("settle").textContent = "";
+  let i = 0, j = 0, any = false;
+  while (i < debt.length && j < cred.length) {
+    const x = Math.min(debt[i][1], cred[j][1]);
+    const d = document.createElement("div");
+    d.textContent = `${debt[i][0]} pays ${cred[j][0]} ${x.toFixed(2)} THB`;
+    $("settle").appendChild(d); any = true;
+    debt[i][1] -= x; cred[j][1] -= x;
+    if (debt[i][1] < 0.005) i++;
+    if (cred[j][1] < 0.005) j++;
+  }
+  if (!any) $("settle").textContent = trip.expenses.length ? "All settled." : "Nothing to settle yet.";
+}
+
+// ----- animated beams background (port of the 21st.dev BeamsBackground, no libraries) -----
+function startBeams() {
+  const canvas = $("beams");
+  const ctx = canvas && canvas.getContext("2d");
+  if (!ctx) return;
+  const SCALE = 0.4, PAD = 60;            // draw at low resolution, the browser blurs and scales it up
+  const COUNT = 30, INTENSITY = 0.9;
+  const HUES = [181, 212, 211];           // cyan, blue, light blue (no yellow in the background)
+  const dark = matchMedia("(prefers-color-scheme: dark)");
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+  let W = 0, H = 0, lastW = 0, lastH = 0, beams = [], raf = 0, last = 0, timer = null;
+  const rnd = (a, b) => a + Math.random() * (b - a);
+  const hueFor = i => HUES[i % HUES.length] + rnd(-6, 6);
+
+  function makeBeam(i) {
+    return {
+      x: rnd(-W * 0.25, W * 1.25), y: rnd(-H * 0.25, H * 1.25),
+      width: rnd(30, 90), length: H * 2.5, angle: rnd(-35, -25),
+      speed: rnd(0.6, 1.8), opacity: rnd(0.12, 0.28), hue: hueFor(i),
+      pulse: rnd(0, Math.PI * 2), pulseSpeed: rnd(0.02, 0.05)
+    };
+  }
+  function resetBeam(b, i) {
+    const spacing = W / 3;
+    b.y = H + 100;
+    b.x = (i % 3) * spacing + spacing / 2 + (Math.random() - 0.5) * spacing * 0.5;
+    b.width = rnd(100, 200); b.speed = rnd(0.5, 0.9);
+    b.hue = hueFor(i); b.opacity = rnd(0.2, 0.3);
+  }
+  function drawBeam(b) {
+    ctx.save();
+    ctx.translate(b.x, b.y);
+    ctx.rotate(b.angle * Math.PI / 180);
+    const o = b.opacity * (0.8 + Math.sin(b.pulse) * 0.2) * INTENSITY;
+    const light = dark.matches ? 65 : 58;
+    const c = a => `hsla(${b.hue},85%,${light}%,${a})`;
+    const g = ctx.createLinearGradient(0, 0, 0, b.length);
+    g.addColorStop(0, c(0)); g.addColorStop(0.1, c(o * 0.5)); g.addColorStop(0.4, c(o));
+    g.addColorStop(0.6, c(o)); g.addColorStop(0.9, c(o * 0.5)); g.addColorStop(1, c(0));
+    ctx.fillStyle = g;
+    ctx.fillRect(-b.width / 2, 0, b.width, b.length);
+    ctx.restore();
+  }
+  function step(dt) {
+    ctx.clearRect(0, 0, W, H);
+    beams.forEach((b, i) => {
+      b.y -= b.speed * dt; b.pulse += b.pulseSpeed * dt;
+      if (b.y + b.length < -100) resetBeam(b, i);
+      drawBeam(b);
+    });
+  }
+  function loop(ts) {
+    const dt = Math.min(ts - (last || ts), 50) / 16.67;   // same speed on 60 Hz and 120 Hz screens
+    last = ts;
+    step(dt);
+    raf = requestAnimationFrame(loop);
+  }
+  function size() {
+    lastW = innerWidth; lastH = innerHeight;
+    W = lastW + PAD * 2; H = lastH + PAD * 2;
+    canvas.width = Math.round(W * SCALE); canvas.height = Math.round(H * SCALE);
+    ctx.setTransform(SCALE, 0, 0, SCALE, 0, 0);
+    beams = Array.from({length: COUNT}, (_, i) => makeBeam(i));
+  }
+  function start() {
+    cancelAnimationFrame(raf); size(); last = 0;
+    if (reduced.matches) step(0);          // calm, still picture
+    else raf = requestAnimationFrame(loop);
+  }
+  addEventListener("resize", () => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      if (innerWidth !== lastW || Math.abs(innerHeight - lastH) > 150) start();   // ignore mobile address-bar changes
+    }, 150);
+  });
+  dark.addEventListener("change", start);
+  reduced.addEventListener("change", start);
+  start();
+}
+
+// ----- easy Thai phrases -----
+const PHRASES = {
+  "Greetings": [
+    ["สวัสดี", "sa-wat-dee", "Hello / Goodbye"],
+    ["ขอบคุณ", "khop-khun", "Thank you"],
+    ["ขอโทษ", "kho-thot", "Sorry / Excuse me"],
+    ["ไม่เป็นไร", "mai pen rai", "No problem / Never mind"],
+    ["สบายดีไหม", "sa-bai dee mai", "How are you?", true]
+  ],
+  "Food": [
+    ["ขอเมนูหน่อย", "kho may-nu noi", "Can I see the menu?"],
+    ["เอาอันนี้", "ao an-nee", "I'll have this one"],
+    ["ไม่เผ็ด", "mai phet", "Not spicy"],
+    ["อร่อยมาก", "a-roi mak", "Very delicious"],
+    ["เช็คบิลหน่อย", "chek bin noi", "Bill, please"]
+  ],
+  "Getting around": [
+    ["ไปสนามบิน", "pai sa-nam-bin", "Go to the airport"],
+    ["เปิดมิเตอร์หน่อย", "poet mi-ter noi", "Please use the meter"],
+    ["จอดตรงนี้", "jot trong nee", "Stop here"],
+    ["เลี้ยวซ้าย / เลี้ยวขวา", "liao sai / liao khwa", "Turn left / right"],
+    ["ห้องน้ำอยู่ที่ไหน", "hong-nam yu thi-nai", "Where is the toilet?", true]
+  ],
+  "Shopping": [
+    ["ราคาเท่าไหร่", "ra-kha thao-rai", "How much is it?", true],
+    ["แพงไป", "phaeng pai", "Too expensive"],
+    ["ลดหน่อยได้ไหม", "lot noi dai mai", "Can you give a discount?", true],
+    ["ไม่เอา ขอบคุณ", "mai ao, khop-khun", "No, thank you"]
+  ]
+};
+let polite = "none", pCat = "All";
+try { polite = localStorage.getItem("polite") || "none"; } catch (e) {}
+
+// Polite ending: men say "khrab"; women say "kha" (ค่ะ for statements, คะ for questions)
+function politeEnding(isQuestion) {
+  if (polite === "man") return {th: "ครับ", rom: " khrab"};
+  if (polite === "woman") return {th: isQuestion ? "คะ" : "ค่ะ", rom: " kha"};
+  return null;
+}
+function speak(text) {
+  if (!("speechSynthesis" in window)) return banner("Audio isn't supported in this browser.", true);
+  const voices = speechSynthesis.getVoices();
+  if (voices.length && !voices.some(v => /^th/i.test(v.lang))) banner("No Thai voice found on this device, so audio may be silent.", true);
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = "th-TH"; u.rate = 0.85;
+  speechSynthesis.cancel(); speechSynthesis.speak(u);
+}
+function renderPhrases() {
+  document.querySelectorAll("#seg button").forEach(b => b.classList.toggle("on", b.dataset.p === polite));
+  const chips = $("pChips"); chips.textContent = "";
+  ["All", ...Object.keys(PHRASES)].forEach(c => {
+    const b = document.createElement("button");
+    b.textContent = c; if (c === pCat) b.className = "on";
+    b.onclick = () => { pCat = c; renderPhrases(); };
+    chips.appendChild(b);
+  });
+  const list = $("pList"); list.textContent = "";
+  Object.entries(PHRASES).forEach(([cat, items]) => {
+    if (pCat !== "All" && pCat !== cat) return;
+    items.forEach(([th, rom, en, q]) => {
+      const end = politeEnding(q);
+      const card = document.createElement("div"); card.className = "card phrase";
+      const box = document.createElement("div");
+      const t = document.createElement("div"); t.className = "th"; t.append(th);
+      const r = document.createElement("div"); r.className = "rom"; r.append(rom);
+      if (end) {
+        const a = document.createElement("span"); a.className = "particle"; a.textContent = end.th; t.append(a);
+        const b = document.createElement("span"); b.className = "particle"; b.textContent = end.rom; r.append(b);
+      }
+      const e = document.createElement("div"); e.className = "en"; e.textContent = en;
+      box.append(t, r, e);
+      const play = document.createElement("button");
+      play.className = "play"; play.textContent = "▶"; play.setAttribute("aria-label", "Play audio");
+      play.onclick = () => speak(th + (end ? end.th : ""));
+      card.append(box, play); list.appendChild(card);
+    });
+  });
+}
+document.querySelectorAll("#seg button").forEach(b => b.onclick = () => {
+  polite = b.dataset.p;
+  try { localStorage.setItem("polite", polite); } catch (e) {}
+  renderPhrases();
+});
+
+// ----- dock: icons grow as the mouse gets close -----
+function initDock() {
+  if (!matchMedia("(hover:hover) and (pointer:fine)").matches) return;   // touch screens keep the simple dock
+  const dock = document.querySelector(".dock");
+  const items = [...dock.querySelectorAll("button")];
+  const BASE = 48, MAX = 80, RANGE = 140;
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+  const cur = items.map(() => BASE);
+  let mouseX = null, raf = 0;
+  const apply = (i, size) => {
+    items[i].style.width = items[i].style.height = size + "px";
+    items[i].style.setProperty("--ic", Math.round(size * 0.5) + "px");
+  };
+  function tick() {
+    let moving = false;
+    items.forEach((b, i) => {
+      let target = BASE;
+      if (mouseX !== null && !reduced.matches) {
+        const r = b.getBoundingClientRect();
+        const d = Math.abs(mouseX - (r.left + r.width / 2));
+        if (d < RANGE) target = BASE + (MAX - BASE) * (Math.cos(Math.PI * d / RANGE) + 1) / 2;
+      }
+      const diff = target - cur[i];
+      if (Math.abs(diff) > 0.3) { cur[i] += diff * 0.25; moving = true; } else cur[i] = target;
+      apply(i, cur[i]);
+    });
+    raf = (moving || mouseX !== null) ? requestAnimationFrame(tick) : 0;
+  }
+  dock.addEventListener("pointermove", e => {
+    if (e.pointerType !== "mouse") return;
+    mouseX = e.clientX; if (!raf) raf = requestAnimationFrame(tick);
+  });
+  dock.addEventListener("pointerleave", () => { mouseX = null; if (!raf) raf = requestAnimationFrame(tick); });
+  items.forEach((_, i) => apply(i, BASE));
+}
+
+// ----- start -----
+setInterval(() => { if (trip && !document.hidden) refresh(); }, 6000);
+const startCode = location.hash.replace("#", "") || store.get();
+if (startCode) joinTrip(startCode, true);
+renderAll();
+renderPhrases();
+initDock();
+startBeams();
+</script>
+</body>
+</html>
