@@ -108,7 +108,7 @@ body .md strong{font-weight:700;background:none}
 
 /* ----- dot-field hero ----- */
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.hero{display:block;height:calc(100svh + 90vh);min-height:0;overflow:visible;align-items:initial;background:#0b2a3c}
+.hero{display:block;height:100svh;min-height:0;overflow:visible;align-items:initial;background:#0b2a3c}
 .hero::before{display:none}
 .df-stage{position:sticky;top:0;height:100svh;min-height:560px;width:100%;overflow:hidden;color:#fff;background:linear-gradient(180deg,#0b2a3c,#0f5c6b)}
 .df-stage .hero-photo{z-index:0}
@@ -146,34 +146,9 @@ body .md strong{font-weight:700;background:none}
       <canvas id="dfGlow" aria-hidden="true"></canvas>
       <canvas id="dfDots" aria-hidden="true"></canvas>
       <h1 class="sr-only">Sawasdee</h1>
-      <div class="df-copy" id="dfCopy">
-        <div class="df-top"><span class="df-pill"><i></i>สวัสดี · See Thailand the way locals do</span></div>
-        <div class="df-bottom">
-          <p class="lead">Honest tips from a Thai local: where to go, what to eat, what things should cost, and how to say thank you.</p>
-          <div class="cta">
-            <button class="go" data-go="plan">Start exploring &rarr;</button>
-            <button class="go ghost" data-go="phrases">Learn 5 Thai words</button>
-          </div>
-          <p class="menu-hint">Use the menu at the bottom of the screen to jump anywhere.</p>
-        </div>
-      </div>
-      <div class="df-hint" id="dfHint" aria-hidden="true"><div class="mouse"><span></span></div><span id="dfHintLabel">Scroll to scatter</span></div>
     </div>
   </section>
-  <section class="feats">
-    <h2>Everything for your trip, in one place</h2>
-    <div class="feat-grid">
-      <button class="feat" data-go="plan"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span><b>Plan with AI</b><span class="t">Tell us your days, budget and interests, and get a day-by-day plan with prices in baht.</span></button>
-      <button class="feat" data-go="ask"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></span><b>Ask a Thai local</b><span class="t">Where to eat, what a taxi should cost, which scams to skip.</span></button>
-      <button class="feat" data-go="phrases"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg></span><b>Easy Thai phrases</b><span class="t">Hear and say the words Thais love, with the polite ending built in.</span></button>
-      <button class="feat" data-go="money"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg></span><b>Split costs with friends</b><span class="t">Share one trip code. Everyone adds expenses and sees who owes whom.</span></button>
-    </div>
-    <div class="card tripcta">
-      <p><b>Travelling with friends?</b><br>Create a trip and share its code. Everyone sees the same plan and can add expenses.</p>
-      <button class="go" data-go="trip">Create or join a trip</button>
-    </div>
-  </section>
-</div>
+  </div>
 <main id="app" hidden>
 <h1><svg class="flag" viewBox="0 0 9 6" width="32" height="21" role="img" aria-label="Thailand flag"><rect width="9" height="6" fill="#A51931"/><rect y="1" width="9" height="4" fill="#F4F5F8"/><rect y="2" width="9" height="2" fill="#2D2A4A"/></svg>Thailand Trip Guide</h1>
 <div id="banner" class="banner" hidden></div>
@@ -313,14 +288,13 @@ document.querySelectorAll("[data-go]").forEach(b => b.onclick = () => go(b.datas
 
 // ----- dot-field hero: the headline is assembled from a grid of dots -----
 function startDotField() {
-  const stage = $("dfStage"), outer = $("hero"), cv = $("dfDots"), gl = $("dfGlow"), copy = $("dfCopy");
-  const hint = $("dfHint"), hintLabel = $("dfHintLabel");
+  const stage = $("dfStage"), cv = $("dfDots"), gl = $("dfGlow");
   const ctx = cv.getContext("2d"), gtx = gl.getContext("2d");
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const HEADLINE = "Sawasdee", ACCENT = "#F9D84A", GX = 20, GY = 13, REPEL = 120;
   const FONT = '600 {px}px "Source Serif 4", Georgia, serif';
   const S = {W: 0, H: 0, N: 0, P: new Float32Array(0), t0: 0, scrollP: 0, last: 0, kick: 0, mouse: {x: -9999, y: -9999, on: false}};
-  let raf = 0, visible = true, readyTimer = 0, ready = false;
+  let raf = 0, visible = true;
 
   const FLOW = (x, y, t) => (Math.sin(x * 0.004 + t * 0.7) + Math.cos(y * 0.005 - t * 0.5) + Math.sin((x + y) * 0.002 + t * 0.3)) * Math.PI;
 
@@ -330,7 +304,7 @@ function startDotField() {
     let size = Math.min(W * 0.2, H * 0.3, 240);
     for (;;) { g.font = FONT.replace("{px}", size); if (g.measureText(HEADLINE).width <= W * 0.88 || size < 28) break; size *= 0.92; }
     g.font = FONT.replace("{px}", size); g.textAlign = "center"; g.textBaseline = "middle";
-    g.fillText(HEADLINE, W / 2, H * (W < H ? 0.33 : 0.38));
+    g.fillText(HEADLINE, W / 2, H * (W < H ? 0.42 : 0.46));
     const d = g.getImageData(0, 0, W, H).data, pts = [], step = Math.max(3, Math.round(size / 40));
     for (let y = 0; y < H; y += step) for (let x = 0; x < W; x += step) if (d[(y * W + x) * 4 + 3] > 128) pts.push(x, y);
     return pts;
@@ -354,25 +328,14 @@ function startDotField() {
     for (let k = 0; k < nText; k++) {
       const o = ids[k] * 10, tx = tgt[k * 2], ty = tgt[k * 2 + 1];
       P[o + 6] = tx; P[o + 7] = ty; P[o + 9] = 1;
-      P[o + 8] = 0.15 + Math.min(0.9, Math.hypot(tx - S.W / 2, ty - S.H * (S.W < S.H ? 0.33 : 0.38)) / diag) * 1.1 + Math.random() * 0.25;
+      P[o + 8] = 0.15 + Math.min(0.9, Math.hypot(tx - S.W / 2, ty - S.H * (S.W < S.H ? 0.42 : 0.46)) / diag) * 1.1 + Math.random() * 0.25;
     }
     S.P = P;
   }
 
-  function setCopy() {
-    const p = S.scrollP;
-    copy.style.opacity = ready ? String(Math.max(0, 1 - p * 1.6)) : "";
-    const up = p > 0.85;
-    hint.dataset.up = up ? "true" : "false";
-    hintLabel.textContent = up ? "Scroll up to gather" : "Scroll to scatter";
-    hint.style.opacity = ready ? String(up ? 1 : Math.max(0, 1 - p * 5)) : "0";
-  }
-
   function restart() {
     S.kick = 0; build(); S.t0 = performance.now();
-    ready = false; copy.classList.remove("ready");
-    clearTimeout(readyTimer);
-    readyTimer = setTimeout(() => { ready = true; copy.classList.add("ready"); setCopy(); }, reduce ? 0 : 1700);
+    
   }
 
   function frame(now) {
@@ -424,14 +387,8 @@ function startDotField() {
     ctx.globalAlpha = 1; gtx.globalAlpha = 1;
   }
 
-  function onScroll() {        // 0 at the top of the page, 1 after 70% of a screen
-    const r = outer.getBoundingClientRect();
-    S.scrollP = Math.min(1, Math.max(0, -r.top / (innerHeight * 0.7)));
-    setCopy();
-  }
   stage.addEventListener("pointermove", e => { const r = stage.getBoundingClientRect(); S.mouse.x = e.clientX - r.left; S.mouse.y = e.clientY - r.top; S.mouse.on = true; });
   stage.addEventListener("pointerleave", () => { S.mouse.on = false; });
-  addEventListener("scroll", onScroll, {passive: true});
 
   let rt = 0, wasHidden = false;
   new ResizeObserver(() => {
@@ -445,7 +402,7 @@ function startDotField() {
   new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(stage);
 
   const fontsReady = document.fonts && document.fonts.load ? document.fonts.load(FONT.replace("{px}", 100)).catch(() => []) : Promise.resolve();
-  fontsReady.then(() => { restart(); onScroll(); raf = requestAnimationFrame(frame); });
+  fontsReady.then(() => { restart(); raf = requestAnimationFrame(frame); });
 }
 
 // ----- trip -----
