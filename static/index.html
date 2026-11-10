@@ -73,12 +73,108 @@ body .md strong{font-weight:700;background:none}
 .en{color:var(--muted);font-size:.95rem}
 .particle{background:var(--accent);color:var(--on-accent);border-radius:6px;padding:0 5px;margin-left:2px;font-style:normal;font-weight:600}
 .play{border:none;background:var(--accent);color:var(--on-accent);border-radius:50%;width:42px;height:42px;font-size:1rem;cursor:pointer;flex:none}
+
+/* ----- landing page ----- */
+.home{position:relative}
+.hero{position:relative;min-height:100vh;min-height:100svh;overflow:hidden;display:flex;align-items:flex-end;color:#fff;background:#0b2a3c}
+.hero-art,.hero-photo{position:absolute;inset:0;width:100%;height:100%}
+.hero-photo{background-size:cover;background-position:center;opacity:0;transition:opacity .8s}
+.hero-photo.on{opacity:1}
+.hero::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(6,18,32,.66) 0%,rgba(6,18,32,.3) 55%,rgba(6,18,32,0) 100%),linear-gradient(0deg,rgba(6,18,32,.6) 0%,rgba(6,18,32,0) 48%)}
+.hero-in{position:relative;z-index:2;width:100%;max-width:1100px;margin:0 auto;padding:0 clamp(20px,5vw,56px) 150px}
+.eyebrow{margin:0 0 14px;font-family:"Noto Serif Thai","Source Serif 4",serif;font-weight:600;letter-spacing:.22em;text-transform:uppercase;font-size:.85rem;color:var(--accent)}
+.hero-h{margin:0 0 18px;font-size:clamp(2.6rem,8.4vw,5.6rem);line-height:1.02;letter-spacing:-.02em;font-weight:600;max-width:11em;text-shadow:0 2px 24px rgba(0,0,0,.35)}
+.hero-h em{font-style:italic;font-weight:400}
+.lead{margin:0 0 26px;max-width:33em;font-size:clamp(1.02rem,2.4vw,1.25rem);text-shadow:0 1px 12px rgba(0,0,0,.45)}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.cta .go{margin-top:0;padding:14px 26px;font-size:1.05rem;border-radius:999px}
+.cta .go.ghost{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.45);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.menu-hint{margin:16px 0 0;font-size:.85rem;opacity:.85}
+.feats{max-width:1000px;margin:0 auto;padding:56px 16px 150px}
+.feats h2{margin:0 0 18px;font-size:clamp(1.4rem,4vw,2rem);line-height:1.15}
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:12px}
+.feat{display:flex;flex-direction:column;gap:6px;align-items:flex-start;text-align:left;background:var(--card);color:var(--text);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:14px;padding:16px;cursor:pointer;font:inherit;transition:transform .2s,box-shadow .2s}
+.feat:hover,.feat:focus-visible{transform:translateY(-3px);box-shadow:0 10px 24px rgba(0,0,0,.18)}
+.feat .ic{width:42px;height:42px;border-radius:12px;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;margin-bottom:4px}
+.feat .ic svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.feat b{font-size:1.1rem}
+.feat span.t{color:var(--muted);font-size:.95rem}
+.tripcta{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.tripcta p{margin:0;flex:1 1 260px}
+.tripcta .go{margin-top:0}
+@keyframes nudge{0%{box-shadow:0 10px 30px rgba(0,0,0,.18),0 0 0 0 rgba(249,216,74,.75)}100%{box-shadow:0 10px 30px rgba(0,0,0,.18),0 0 0 22px rgba(249,216,74,0)}}
+.dock.nudge{animation:nudge 1.6s ease-out 3}
+@media (prefers-reduced-motion:reduce){.dock.nudge{animation:none}.hero-photo,.feat{transition:none}}
+
+/* ----- dot-field hero ----- */
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.hero{display:block;height:calc(100svh + 90vh);min-height:0;overflow:visible;align-items:initial;background:#0b2a3c}
+.hero::before{display:none}
+.df-stage{position:sticky;top:0;height:100svh;min-height:560px;width:100%;overflow:hidden;color:#fff;background:linear-gradient(180deg,#0b2a3c,#0f5c6b)}
+.df-stage .hero-photo{z-index:0}
+.df-stage::before{content:"";position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse 70% 32% at 50% 38%,rgba(6,18,32,.55),rgba(6,18,32,0) 100%),linear-gradient(0deg,rgba(6,18,32,.78) 0%,rgba(6,18,32,.45) 50%,rgba(6,18,32,.6) 100%)}
+#dfGlow,#dfDots{position:absolute;inset:0;width:100%;height:100%}
+#dfGlow{z-index:2;pointer-events:none;opacity:.9;mix-blend-mode:screen;filter:blur(10px)}
+#dfDots{z-index:3;filter:drop-shadow(0 0 3px rgba(0,0,0,.7))}
+.df-copy{position:absolute;inset:0;z-index:4;pointer-events:none}
+.df-top{position:absolute;left:0;right:0;top:12vh;display:flex;justify-content:center;padding:0 16px}
+.df-pill{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.12);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);font-size:.85rem;text-align:center}
+.df-pill i{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);flex:none}
+.df-bottom{position:absolute;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 20px 190px}
+.df-bottom .lead{max-width:34em}
+.df-bottom .cta{justify-content:center;pointer-events:auto}
+.df-top,.df-bottom>*{transition:opacity 1s,transform 1s cubic-bezier(.2,.9,.25,1);opacity:0;transform:translateY(10px)}
+.df-copy.ready .df-top,.df-copy.ready .df-bottom>*{opacity:1;transform:none}
+.df-copy.ready .df-bottom>:nth-child(2){transition-delay:.1s}
+.df-copy.ready .df-bottom>:nth-child(3){transition-delay:.2s}
+.df-hint{position:absolute;z-index:4;left:50%;bottom:108px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;font-size:.75rem;opacity:0;transition:opacity .7s;pointer-events:none}
+.df-hint .mouse{position:relative;width:22px;height:34px;border:1.5px solid rgba(255,255,255,.6);border-radius:11px;transition:transform .5s}
+.df-hint[data-up="true"] .mouse{transform:rotate(180deg)}
+.df-hint .mouse span{position:absolute;left:50%;top:7px;margin-left:-1.5px;width:3px;height:7px;border-radius:2px;background:var(--accent);box-shadow:0 0 8px var(--accent);animation:dfwheel 1.8s cubic-bezier(.6,0,.3,1) infinite}
+@keyframes dfwheel{0%{transform:translateY(0);opacity:0}20%{opacity:1}70%{transform:translateY(10px);opacity:0}100%{opacity:0}}
+@media (max-height:640px){.df-hint{display:none}}
+@media (prefers-reduced-motion:reduce){.df-hint .mouse span{animation:none}.df-top,.df-bottom>*{transition:none}}
 [hidden]{display:none!important}
 </style>
 </head>
 <body>
 <canvas id="beams" aria-hidden="true"></canvas>
-<main>
+<div id="home" class="home">
+  <section class="hero" id="hero">
+    <div class="df-stage" id="dfStage">
+      <div class="hero-photo" id="heroPhoto"></div>
+      <canvas id="dfGlow" aria-hidden="true"></canvas>
+      <canvas id="dfDots" aria-hidden="true"></canvas>
+      <h1 class="sr-only">Sawasdee</h1>
+      <div class="df-copy" id="dfCopy">
+        <div class="df-top"><span class="df-pill"><i></i>สวัสดี · See Thailand the way locals do</span></div>
+        <div class="df-bottom">
+          <p class="lead">Honest tips from a Thai local: where to go, what to eat, what things should cost, and how to say thank you.</p>
+          <div class="cta">
+            <button class="go" data-go="plan">Start exploring &rarr;</button>
+            <button class="go ghost" data-go="phrases">Learn 5 Thai words</button>
+          </div>
+          <p class="menu-hint">Use the menu at the bottom of the screen to jump anywhere.</p>
+        </div>
+      </div>
+      <div class="df-hint" id="dfHint" aria-hidden="true"><div class="mouse"><span></span></div><span id="dfHintLabel">Scroll to scatter</span></div>
+    </div>
+  </section>
+  <section class="feats">
+    <h2>Everything for your trip, in one place</h2>
+    <div class="feat-grid">
+      <button class="feat" data-go="plan"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span><b>Plan with AI</b><span class="t">Tell us your days, budget and interests, and get a day-by-day plan with prices in baht.</span></button>
+      <button class="feat" data-go="ask"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></span><b>Ask a Thai local</b><span class="t">Where to eat, what a taxi should cost, which scams to skip.</span></button>
+      <button class="feat" data-go="phrases"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg></span><b>Easy Thai phrases</b><span class="t">Hear and say the words Thais love, with the polite ending built in.</span></button>
+      <button class="feat" data-go="money"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg></span><b>Split costs with friends</b><span class="t">Share one trip code. Everyone adds expenses and sees who owes whom.</span></button>
+    </div>
+    <div class="card tripcta">
+      <p><b>Travelling with friends?</b><br>Create a trip and share its code. Everyone sees the same plan and can add expenses.</p>
+      <button class="go" data-go="trip">Create or join a trip</button>
+    </div>
+  </section>
+</div>
+<main id="app" hidden>
 <h1><svg class="flag" viewBox="0 0 9 6" width="32" height="21" role="img" aria-label="Thailand flag"><rect width="9" height="6" fill="#A51931"/><rect y="1" width="9" height="4" fill="#F4F5F8"/><rect y="2" width="9" height="2" fill="#2D2A4A"/></svg>Thailand Trip Guide</h1>
 <div id="banner" class="banner" hidden></div>
 <section id="trip">
@@ -159,7 +255,8 @@ body .md strong{font-weight:700;background:none}
 </section>
 </main>
 <nav class="dock" aria-label="Main">
-  <button data-t="trip" class="on" data-label="Trip" aria-label="Trip"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg><span class="lbl">Trip</span></button>
+  <button data-t="home" class="on" data-label="Home" aria-label="Home"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg><span class="lbl">Home</span></button>
+  <button data-t="trip" data-label="Trip" aria-label="Trip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span class="lbl">Trip</span></button>
   <button data-t="plan" data-label="Plan" aria-label="Plan"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span class="lbl">Plan</span></button>
   <button data-t="ask" data-label="Ask a local" aria-label="Ask a local"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg><span class="lbl">Ask</span></button>
   <button data-t="phrases" data-label="Thai phrases" aria-label="Thai phrases"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg><span class="lbl">Thai</span></button>
@@ -194,10 +291,162 @@ async function api(method, url, body) {
 // ----- tabs -----
 function show(t) {
   document.querySelectorAll(".dock button").forEach(x => x.classList.toggle("on", x.dataset.t === t));
+  const isHome = t === "home";
+  $("home").hidden = !isHome; $("app").hidden = isHome;
   ["trip", "plan", "ask", "phrases", "money"].forEach(s => $(s).hidden = s !== t);
   scrollTo({top: 0});
 }
+function go(t) {
+  if (t === "phrases") { pCat = "Greetings"; renderPhrases(); }   // the 5 greetings = "Learn 5 Thai words"
+  show(t);
+}
 document.querySelectorAll(".dock button").forEach(b => b.onclick = () => show(b.dataset.t));
+document.querySelectorAll("[data-go]").forEach(b => b.onclick = () => go(b.dataset.go));
+
+// Optional photo: put a file named hero.jpg in the static folder and it replaces the drawing
+(function () {
+  const img = new Image();
+  img.onload = () => { const p = $("heroPhoto"); p.style.backgroundImage = 'url("hero.jpg")'; p.classList.add("on"); };
+  img.src = "hero.jpg";
+})();
+
+
+// ----- dot-field hero: the headline is assembled from a grid of dots -----
+function startDotField() {
+  const stage = $("dfStage"), outer = $("hero"), cv = $("dfDots"), gl = $("dfGlow"), copy = $("dfCopy");
+  const hint = $("dfHint"), hintLabel = $("dfHintLabel");
+  const ctx = cv.getContext("2d"), gtx = gl.getContext("2d");
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const HEADLINE = "Sawasdee", ACCENT = "#F9D84A", GX = 20, GY = 13, REPEL = 120;
+  const FONT = '600 {px}px "Source Serif 4", Georgia, serif';
+  const S = {W: 0, H: 0, N: 0, P: new Float32Array(0), t0: 0, scrollP: 0, last: 0, kick: 0, mouse: {x: -9999, y: -9999, on: false}};
+  let raf = 0, visible = true, readyTimer = 0, ready = false;
+
+  const FLOW = (x, y, t) => (Math.sin(x * 0.004 + t * 0.7) + Math.cos(y * 0.005 - t * 0.5) + Math.sin((x + y) * 0.002 + t * 0.3)) * Math.PI;
+
+  function sample() {          // draw the word on a hidden canvas and keep the filled pixels
+    const W = S.W, H = S.H, c = document.createElement("canvas"), g = c.getContext("2d", {willReadFrequently: true});
+    c.width = W; c.height = H;
+    let size = Math.min(W * 0.2, H * 0.3, 240);
+    for (;;) { g.font = FONT.replace("{px}", size); if (g.measureText(HEADLINE).width <= W * 0.88 || size < 28) break; size *= 0.92; }
+    g.font = FONT.replace("{px}", size); g.textAlign = "center"; g.textBaseline = "middle";
+    g.fillText(HEADLINE, W / 2, H * (W < H ? 0.33 : 0.38));
+    const d = g.getImageData(0, 0, W, H).data, pts = [], step = Math.max(3, Math.round(size / 40));
+    for (let y = 0; y < H; y += step) for (let x = 0; x < W; x += step) if (d[(y * W + x) * 4 + 3] > 128) pts.push(x, y);
+    return pts;
+  }
+
+  function build() {           // 10 numbers per dot: x y vx vy homeX homeY textX textY delay isText
+    const r = stage.getBoundingClientRect(), dpr = Math.min(2, devicePixelRatio || 1);
+    S.W = Math.max(1, Math.round(r.width)); S.H = Math.max(1, Math.round(r.height));
+    for (const c of [cv, gl]) { c.width = S.W * dpr; c.height = S.H * dpr; }
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); gtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const tgt = sample(), cols = Math.ceil(S.W / GX) + 1, rows = Math.ceil(S.H / GY) + 1, cells = cols * rows, nText = tgt.length / 2;
+    S.N = Math.max(cells, nText);
+    const P = new Float32Array(S.N * 10);
+    for (let i = 0; i < S.N; i++) {
+      const cell = i < cells ? i : (Math.random() * cells) | 0, hx = (cell % cols) * GX - 6, hy = Math.floor(cell / cols) * GY - 1, o = i * 10;
+      P[o] = hx; P[o + 1] = hy; P[o + 4] = hx; P[o + 5] = hy;
+    }
+    const ids = Array.from({length: S.N}, (_, i) => i);
+    for (let i = ids.length - 1; i > 0; i--) { const j = (Math.random() * (i + 1)) | 0; [ids[i], ids[j]] = [ids[j], ids[i]]; }
+    const diag = Math.hypot(S.W, S.H);
+    for (let k = 0; k < nText; k++) {
+      const o = ids[k] * 10, tx = tgt[k * 2], ty = tgt[k * 2 + 1];
+      P[o + 6] = tx; P[o + 7] = ty; P[o + 9] = 1;
+      P[o + 8] = 0.15 + Math.min(0.9, Math.hypot(tx - S.W / 2, ty - S.H * (S.W < S.H ? 0.33 : 0.38)) / diag) * 1.1 + Math.random() * 0.25;
+    }
+    S.P = P;
+  }
+
+  function setCopy() {
+    const p = S.scrollP;
+    copy.style.opacity = ready ? String(Math.max(0, 1 - p * 1.6)) : "";
+    const up = p > 0.85;
+    hint.dataset.up = up ? "true" : "false";
+    hintLabel.textContent = up ? "Scroll up to gather" : "Scroll to scatter";
+    hint.style.opacity = ready ? String(up ? 1 : Math.max(0, 1 - p * 5)) : "0";
+  }
+
+  function restart() {
+    S.kick = 0; build(); S.t0 = performance.now();
+    ready = false; copy.classList.remove("ready");
+    clearTimeout(readyTimer);
+    readyTimer = setTimeout(() => { ready = true; copy.classList.add("ready"); setCopy(); }, reduce ? 0 : 1700);
+  }
+
+  function frame(now) {
+    raf = requestAnimationFrame(frame);
+    if (!visible) return;
+    const t = (now - S.t0) / 1000, W = S.W, H = S.H, N = S.N, P = S.P, R2 = REPEL * REPEL, m = S.mouse;
+    const SC = S.scrollP, q = Math.min(1, SC), sweep = ((t * 0.35) % 1.6) - 0.3;
+    S.kick = S.kick * 0.93 + Math.abs(SC - S.last) * 6; S.last = SC;
+    ctx.clearRect(0, 0, W, H); gtx.clearRect(0, 0, W, H);
+    ctx.fillStyle = "#fff"; gtx.fillStyle = ACCENT;
+    for (let i = 0; i < N; i++) {
+      const o = i * 10, isT = P[o + 9] === 1;
+      let tx = P[o + 4], ty = P[o + 5], k = 0.06, fl = 0;
+      const local = t - P[o + 8];
+      if (isT) {
+        if (local > 0) {
+          const d = Math.min(1, SC * (0.8 + P[o + 8] * 0.6));
+          tx = P[o + 6] + (P[o + 4] - P[o + 6]) * d; ty = P[o + 7] + (P[o + 5] - P[o + 7]) * d;
+          k = Math.min(0.09, 0.02 + local * 0.08);
+        }
+        fl = local > -1 ? Math.max(0, 1 - Math.max(0, local) * 1.4) : 0;
+      }
+      if (S.kick > 0.01) fl = Math.max(fl, Math.min(1, S.kick) * 0.9);
+      if (reduce) {
+        const d = isT ? 1 - q : 0;
+        P[o] = P[o + 4] + ((isT ? P[o + 6] : P[o + 4]) - P[o + 4]) * d;
+        P[o + 1] = P[o + 5] + ((isT ? P[o + 7] : P[o + 5]) - P[o + 5]) * d;
+      } else {
+        let ax = (tx - P[o]) * k, ay = (ty - P[o + 1]) * k;
+        if (fl > 0) { const a = FLOW(P[o], P[o + 1], t); ax += Math.cos(a) * 2.2 * fl; ay += Math.sin(a) * 2.2 * fl; }
+        if (m.on) {
+          const dx = P[o] - m.x, dy = P[o + 1] - m.y, d2 = dx * dx + dy * dy;
+          if (d2 < R2) { const d = Math.sqrt(d2) || 1, f = (1 - d / REPEL) * 6; ax += (dx / d) * f; ay += (dy / d) * f; }
+        }
+        P[o + 2] = (P[o + 2] + ax) * 0.82; P[o + 3] = (P[o + 3] + ay) * 0.82;
+        P[o] += P[o + 2]; P[o + 1] += P[o + 3];
+      }
+      const x = P[o], y = P[o + 1], sp = Math.abs(P[o + 2]) + Math.abs(P[o + 3]), gridA = Math.min(0.5, 0.12 + sp * 0.05);
+      if (isT) {
+        const settle = reduce ? 1 - q : Math.min(1, Math.max(0, local * 1.2)) * (1 - q);
+        const a = (0.34 + settle * 0.6) * (1 - q) + gridA * q, r = 1.5 - q * 0.75;
+        ctx.globalAlpha = Math.min(1, a * 1.15); ctx.fillRect(x - r, y - r, r * 2, r * 2);
+        if (q < 1 && !reduce) {
+          const w = Math.max(0, 1 - Math.abs(x / W - sweep) * 7), ga = (w * 0.9 + (1 - settle) * 0.25) * (1 - q);
+          if (ga > 0.02) { gtx.globalAlpha = ga; gtx.fillRect(x - 2, y - 2, 4, 4); }
+        }
+      } else { ctx.globalAlpha = gridA; ctx.fillRect(x - 0.75, y - 0.75, 1.5, 1.5); }
+    }
+    ctx.globalAlpha = 1; gtx.globalAlpha = 1;
+  }
+
+  function onScroll() {        // 0 at the top of the page, 1 after 70% of a screen
+    const r = outer.getBoundingClientRect();
+    S.scrollP = Math.min(1, Math.max(0, -r.top / (innerHeight * 0.7)));
+    setCopy();
+  }
+  stage.addEventListener("pointermove", e => { const r = stage.getBoundingClientRect(); S.mouse.x = e.clientX - r.left; S.mouse.y = e.clientY - r.top; S.mouse.on = true; });
+  stage.addEventListener("pointerleave", () => { S.mouse.on = false; });
+  addEventListener("scroll", onScroll, {passive: true});
+
+  let rt = 0, wasHidden = false;
+  new ResizeObserver(() => {
+    clearTimeout(rt);
+    rt = setTimeout(() => {
+      const hidden = stage.getBoundingClientRect().width < 2;
+      if (hidden) { wasHidden = true; return; }
+      if (wasHidden) { wasHidden = false; restart(); } else { build(); S.t0 = performance.now() - 3000; }
+    }, 150);
+  }).observe(stage);
+  new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(stage);
+
+  const fontsReady = document.fonts && document.fonts.load ? document.fonts.load(FONT.replace("{px}", 100)).catch(() => []) : Promise.resolve();
+  fontsReady.then(() => { restart(); onScroll(); raf = requestAnimationFrame(frame); });
+}
 
 // ----- trip -----
 function setTrip(t) {
@@ -629,6 +878,13 @@ renderAll();
 renderPhrases();
 initDock();
 startBeams();
+startDotField();
+show(startCode ? "trip" : "home");   // shared links and returning users go straight to their trip
+if (!startCode && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  const dock = document.querySelector(".dock");
+  dock.classList.add("nudge");
+  dock.addEventListener("animationend", () => dock.classList.remove("nudge"), {once: true});
+}
 </script>
 </body>
 </html>
