@@ -1008,7 +1008,18 @@ function politeEnding(isQuestion) {
   if (polite === "woman") return {th: isQuestion ? "คะ" : "ค่ะ", rom: " kha"};
   return null;
 }
+// Recorded audio (static/audio, made by generate_audio.py) plays on every device.
+// If a file is missing the browser's own Thai voice is the fallback.
+let AUDIO = {}, curAudio = null;
+try { fetch("audio/manifest.json").then(r => r.ok ? r.json() : {}).then(m => { AUDIO = m; }).catch(() => {}); } catch (e) {}
 function speak(text) {
+  const f = AUDIO[text];
+  if (!f) return speakVoice(text);
+  try { if (curAudio) curAudio.pause(); if ("speechSynthesis" in window) speechSynthesis.cancel(); } catch (e) {}
+  curAudio = new Audio("audio/" + f);
+  curAudio.play().catch(() => speakVoice(text));
+}
+function speakVoice(text) {
   if (!("speechSynthesis" in window)) return banner("Audio isn't supported in this browser.", true);
   const voices = speechSynthesis.getVoices();
   if (voices.length && !voices.some(v => /^th/i.test(v.lang))) banner("No Thai voice found on this device, so audio may be silent.", true);
