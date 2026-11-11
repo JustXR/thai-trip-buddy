@@ -16,10 +16,6 @@
   "tip": "EXAMPLE: Busy street stalls with lots of locals are usually the best and safest choice."
  },
  {
-  "category": "money",
-  "tip": "EXAMPLE: Replace these with YOUR real local prices and advice."
- },
- {
   "category": "transport",
   "tip": "Khlong Saen Saep canal boat (Golden Mount line) is a fast, cheap way to cross Bangkok and avoid traffic. The route has two sections that meet at Pratu Nam Pier (ประตูน้ำ), the central interchange where you must get off and change boats if you travel the whole way."
  },
@@ -58,5 +54,253 @@
  {
   "category": "transport",
   "tip": "How to combine boats with other transport in Bangkok: the Saen Saep boat at Asoke connects to MRT and the Airport Rail Link, and at Pratu Nam you are in the shopping district. The Chao Phraya boat connects to BTS at Saphan Taksin. Boats avoid traffic jams but run less often and stop earlier in the evening than BTS and MRT."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Pad Kra Pao (ผัดกะเพรา), Everyday plates, Everywhere. Holy basil stir-fry over rice — the dish Thais actually eat for lunch. Minced pork (moo), chicken (gai) or beef (neua) with holy basil, garlic and fresh chilies. Spice: hot, can be ordered milder. How to order: Add 'kai dao' for a crispy fried egg on top."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Khao Man Gai (ข้าวมันไก่), Everyday plates, Everyday plate. Thai-style Hainanese chicken rice. Poached chicken over garlic-and-fat-aromatic rice, with a tangy fermented soybean, chili and ginger dipping sauce and a clear winter melon soup. Spice: not spicy."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Khao Moo Daeng / Moo Krob (ข้าวหมูแดง / หมูกรอบ), Everyday plates, Everyday plate. Roasted red barbecue pork and extra-crispy pork belly over rice, with a sweet-savory red gravy, boiled eggs and cucumber. Spice: not spicy."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Pad Kana Moo Krob (ผัดคะน้าหมูกรอบ), Everyday plates, Everyday plate. Crispy pork belly stir-fried with Chinese broccoli, garlic and bird's eye chilies in oyster sauce. Spice: hot, can be ordered milder."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Khao Kha Moo (ข้าวขาหมู), Everyday plates, Everyday plate. Melt-in-your-mouth braised pork leg stewed in aromatic five-spice broth, served over rice with pickled mustard greens, raw garlic, chilies and a sour chili-vinegar dip. Spice: mild, can be ordered milder."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Pad Prik Gaeng (ผัดพริกแกง), Everyday plates, Everyday plate. Meat of your choice stir-fried directly in red curry paste with long beans, kaffir lime leaves and red chilies, over rice. Spice: hot, cannot be made milder (the spice is part of the dish)."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Boat Noodles (ก๋วยเตี๋ยวเรือ), Noodles, Central. Tiny, rich bowls of noodle soup with an intensely flavorful dark broth (pig or cow blood, cinnamon, star anise), pork balls, tender meat and crispy pork cracklings. Locals stack up five or six empty bowls. Spice: mild, can be ordered milder. How to order: Point at a noodle type, then 'nam tok' for the rich broth."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Yen Ta Fo (เย็นตาโฟ), Noodles, Noodles. Wide rice noodles in a pink broth flavored with fermented red bean curd, topped with fish balls, squid, morning glory and fried wonton skins. Spice: not spicy."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Kuaitiao Tom Yum (ก๋วยเตี๋ยวต้มยำ), Noodles, Noodles. Noodle soup loaded with minced pork, fish balls, crushed peanuts, lime juice, dried chili flakes and chili paste. Spice: hot, can be ordered milder."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Pad See Ew (ผัดซีอิ๊ว), Noodles, Noodles. Wide flat rice noodles stir-fried in a hot wok with dark soy sauce, egg and Chinese broccoli. Spice: not spicy."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Rad Na (ราดหน้า), Noodles, Noodles. Wide rice noodles or crispy egg noodles topped with a thick, savory gravy made with pork and Chinese broccoli. Spice: not spicy."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Som Tam (ส้มตำ), Isan, Isan. Pounded green papaya salad: sour, salty, sweet and fiery all at once. Locals often prefer Som Tam Poo Pla Ra (with salted crab and pungent fermented fish sauce) over the sweeter Som Tam Thai. Spice: very hot, can be ordered milder. How to order: Say 'som tam Thai, phet noi' for the sweeter, milder version."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Larb & Nam Tok (ลาบ / น้ำตก), Isan, Isan. Spicy minced meat salad (larb) or sliced grilled pork or beef salad (nam tok), tossed with lime juice, fish sauce, chilies, mint, toasted ground rice (khao khua) and shallots. Spice: very hot, can be ordered milder."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Gai Yang (ไก่ย่าง), Isan, Isan. Marinated lemongrass grilled chicken served with a spicy tamarind dipping sauce (nam jim jaew). Spice: mild, can be ordered milder."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Tom Saep (ต้มแซ่บ), Isan, Isan. Clear, fiercely hot and sour herbal soup loaded with pork ribs or intestine, lemongrass, galangal, kaffir lime and dry chilies. Spice: very hot, cannot be made milder (the spice is part of the dish)."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Kor Moo Yang (คอหมูย่าง), Isan, Isan. Tender grilled pork neck with a sweet-savory marinade, dipped in nam jim jaew. Spice: mild, can be ordered milder."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Khao Soi (ข้าวซอย), North, North. Rich, coconut curry noodle soup with chicken or beef over soft egg noodles, topped with crisp fried noodles, pickled mustard greens, raw shallots and lime. Spice: mild, can be ordered milder. How to order: Ask for 'khao soi gai' (chicken) — the classic."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Khanom Chin Nam Ngiao (ขนมจีนน้ำเงี้ยว), North, North (Lanna). Fermented rice noodles served with a tangy, tomato-based pork ragout stewed with dried silk cotton flowers and pork blood cubes. Spice: hot, can be ordered milder."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Sai Oua (ไส้อั่ว), North, North (Lanna). Grilled herbal pork sausage packed with red curry paste, lemongrass, kaffir lime leaves and fresh turmeric. Spice: hot, cannot be made milder (the spice is part of the dish)."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Khua Kling (คั่วกลิ้ง), South, South (Pak Tai). Extremely spicy dry-fried curry of minced pork or beef, cooked down with southern yellow curry paste and shredded kaffir lime leaves. Spice: very hot, cannot be made milder (the spice is part of the dish)."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Gaeng Som (แกงส้ม), South, South (Pak Tai). Sour and fiery turmeric-yellow fish curry cooked with bamboo shoots or green papaya, without coconut milk. Spice: very hot, cannot be made milder (the spice is part of the dish)."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Gaeng Tai Pla (แกงไตปลา), South, South. Intense, dark, pungent curry made from fermented fish entrails, dried chili, bamboo shoots, eggplant and pumpkin. Bold, aromatic, unforgettable. Spice: very hot, cannot be made milder (the spice is part of the dish). How to order: Eat it with rice and the free plate of fresh vegetables."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Pla Neung Manao (ปลานึ่งมะนาว), Family dishes, Family dish. Whole steamed sea bass submerged in a boiling chili, garlic, cilantro and lime broth. Spice: hot, can be ordered milder."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Pla Tod Nam Pla (ปลาทอดน้ำปลา), Family dishes, Family dish. Deep-fried whole fish topped with a sweet fish sauce reduction, served with a green mango dip. Spice: not spicy."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Tom Kha Gai (ต้มข่าไก่), Family dishes, Family dish. Creamy coconut broth infused with galangal root, lemongrass, kaffir lime leaves, mushrooms and chicken. Spice: mild, can be ordered milder."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Gaeng Keow Wan (แกงเขียวหวาน), Family dishes, Family dish. Green curry cooked with coconut milk, Thai eggplant, sweet basil, and beef or chicken. Spice: hot, cannot be made milder (the spice is part of the dish)."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Nam Prik Kapi (น้ำพริกกะปิ), Family dishes, Family dish. Umami-rich shrimp paste dip pounded with lime, garlic and chilies, eaten with fried mackerel (pla tu), steamed vegetables and fried acacia egg omelets (khai chao cha-om). Spice: very hot, cannot be made milder (the spice is part of the dish)."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Mango Sticky Rice (ข้าวเหนียวมะม่วง), Sweets, Sticky rice & fruit. Khao niew mamuang: steamed glutinous rice infused with sweetened coconut milk, served with sweet mango and topped with salted coconut cream and crunchy yellow mung beans. Best in April and May. How to order: Look for a cart with a pile of yellow 'nam dok mai' mangoes."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Khao Niew Durian (ข้าวเหนียวทุเรียน), Sweets, Sticky rice & fruit. Warm glutinous rice topped with tender ripe durian chunks drenched in a rich, sweet-and-salty coconut syrup."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Khao Tom Mad (ข้าวต้มมัด), Sweets, Sticky rice & fruit. Sweet sticky rice mixed with coconut milk, stuffed with banana or taro, wrapped in banana leaves and steamed."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Khanom Krok (ขนมครก), Sweets, Griddle & pancakes. Small, round coconut puddings cooked in a dimpled cast-iron pan. Crispy outer shell, soft creamy coconut center, often topped with scallions, sweet corn or taro."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Khanom Buang (Thai Crepes) (ขนมเบื้อง), Sweets, Griddle & pancakes. Thin, crispy folded crepes smeared with sweet meringue cream and topped with shredded coconut or foi thong."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Roti Sai Mai (โรตีสายไหม), Sweets, Griddle & pancakes. Ayutthaya-style cotton candy rolls. Soft, pandan-flavored paper-thin crepes wrapped around spun palm sugar threads."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Tub Tim Krob (ทับทิมกรอบ), Sweets, Shaved ice & cold. \"Red Rubies\": crunchy water chestnut cubes coated in pink tapioca flour, served over crushed ice in sweetened coconut milk."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Lod Chong (ลอดช่อง), Sweets, Shaved ice & cold. Pandan-infused green rice-flour noodles in cold, fragrant coconut milk sweetened with dark palm sugar (nam tan tanod)."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Ruam Mit (รวมมิตร), Sweets, Shaved ice & cold. A customizable bowl of mixed jellies, tapioca pearls, corn, jackfruit and sweet potato over shaved ice and coconut milk. Ideal in hot weather."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Thong Yip (ทองหยิบ), Sweets, Egg-yolk sweets. Egg yolk drops cooked in heavy sugar syrup and pinched into 5-pointed flower shapes. The Thong series was introduced to the Ayutthaya court in the 17th century by Maria Guyomar de Pinha, who brought Portuguese techniques. The golden color symbolizes wealth and good fortune."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Thong Yod (ทองหยอด), Sweets, Egg-yolk sweets. Tear-drop-shaped golden egg yolk balls boiled in sugar syrup."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Foi Thong (ฝอยทอง), Sweets, Egg-yolk sweets. Golden threads of fine egg yolk dripped into boiling syrup, creating sweet silk-like nests."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Med Khanun (เม็ดขนุน), Sweets, Egg-yolk sweets. Mashed mung bean paste coated in egg yolk and cooked in syrup, shaped like jackfruit seeds."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Khanom Chan (ขนมชั้น), Sweets, Steamed coconut cakes. Multi-layered steamed cake made from tapioca and rice flour, flavored with pandan leaf juice and coconut milk. Soft, chewy and peelable layer by layer."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Khanom Piak Poon (ขนมเปียกปูน), Sweets, Steamed coconut cakes. Dark, chewy pudding colored naturally with burnt coconut husk ash or pandan leaves, topped with freshly grated salted coconut."
+ },
+ {
+  "category": "food",
+  "tip": "Local dish: Tako (ตะโก้), Sweets, Steamed coconut cakes. Two-layered pudding served in banana leaf cups. The bottom is flavored tapioca flour (with corn, water chestnuts or taro), topped with a thick, salted coconut cream layer."
+ },
+ {
+  "category": "hidden gems",
+  "tip": "Hidden gem: Wat Phumin (Nan Province, The North). A centuries-old temple famed for its striking cruciform architecture and the iconic \"Whispering Love\" (Pu Marn Ya Marn) mural depicting traditional local life. Opening hours: Daily 6:00 AM – 6:00 PM."
+ },
+ {
+  "category": "hidden gems",
+  "tip": "Hidden gem: Mon Bridge (Sangkhlaburi, The North). Thailand's longest hand-built wooden bridge, crossing the Songalia River. At sunrise it offers misty mountain backdrops and a glimpse into local Mon traditions. Opening hours: Open 24 hours (best at dawn)."
+ },
+ {
+  "category": "hidden gems",
+  "tip": "Hidden gem: Wat Phra That Pha Sorn Kaew (Phetchabun, The North). A surreal mountaintop temple complex adorned with millions of colorful mosaic tiles and pottery pieces, overlooking rolling seas of morning fog. Opening hours: Daily 8:00 AM – 5:00 PM (until 6:00 PM on Saturdays and Sundays)."
+ },
+ {
+  "category": "hidden gems",
+  "tip": "Hidden gem: Koh Kood (Near the Cambodian border, Quiet islands). An untouched island sanctuary with pristine jungle waterfalls, stilted fishing villages and quiet white-sand beaches, free from mass tourism. Opening hours: Open 24 hours (reached by daytime speedboats and ferries)."
+ },
+ {
+  "category": "hidden gems",
+  "tip": "Hidden gem: Ko Kradan (Trang Province, Quiet islands). A stunning, car-free island with world-class coral reefs and powdery white shores, reached directly from the water. Opening hours: Open 24 hours (best in the dry season, November to April)."
+ },
+ {
+  "category": "hidden gems",
+  "tip": "Hidden gem: Ko Yao Noi (Phang Nga Bay, Quiet islands). Tucked quietly between Phuket and Krabi, with dramatic limestone karst views and a genuine look at traditional island life. Opening hours: Open 24 hours (daily longtail boats or speedboats)."
+ },
+ {
+  "category": "hidden gems",
+  "tip": "Hidden gem: Ko Lipe (Satun Province, Quiet islands). A southern Andaman paradise in Tarutao National Marine Park, known for crystal-turquoise water, vibrant marine life and the lively pedestrian Walking Street. Opening hours: Open 24 hours."
+ },
+ {
+  "category": "hidden gems",
+  "tip": "Hidden gem: Ko Tao (Surat Thani Province, Quiet islands). Globally renowned as a premier hub for scuba diving, with rugged granite hills and scenic viewpoints like John-Suwan. Opening hours: Open 24 hours."
+ },
+ {
+  "category": "hidden gems",
+  "tip": "Hidden gem: Koh Surin (Phang Nga Province, Quiet islands). The Surin Islands, a remote national park near the Myanmar border, known for some of Thailand's best snorkelling and a village of the Moken sea nomads. Reached by speedboat from the Phang Nga mainland (Kuraburi area). Opening hours: Open roughly mid-November to mid-May; closed in the rainy season, so check the dates before you go."
+ },
+ {
+  "category": "hidden gems",
+  "tip": "Hidden gem: Talat Noi (Chao Phraya riverside, Bangkok). A historic riverside neighborhood filled with 19th-century courtyard houses, hidden street art, antique workshops and indie cafés. Opening hours: Accessible all day; cafés and shops usually open about 9:00 AM – 6:00 PM."
+ },
+ {
+  "category": "hidden gems",
+  "tip": "Hidden gem: Bang Kachao (Phra Pradaeng, Bangkok). Bangkok's \"Green Lung\": a protected loop of jungle and fruit orchards with a maze of elevated concrete cycling paths, away from city traffic. Opening hours: Daily, dawn to dusk (ideal for daytime biking)."
+ },
+ {
+  "category": "hidden gems",
+  "tip": "Hidden gem: Tuek Daeng Chatuchak (The Red Building) (Opposite Chatuchak Market, Bangkok). A multi-story indoor building packed with retro clothing, vintage band tees, antique furniture and vinyl records. Opening hours: Usually daily about 10:00 AM – 8:00 PM (liveliest on weekends)."
+ },
+ {
+  "category": "hidden gems",
+  "tip": "Hidden gem: Sampheng Market (Talat Sampheng) (Chinatown, Bangkok). A high-energy wholesale labyrinth with narrow alleyways packed wall-to-wall with textiles, fashion accessories and crafts. Opening hours: Daily about 8:00 AM – 5:00 PM. Early wholesale session about 2:00 AM – 7:00 AM (closed Mondays)."
+ },
+ {
+  "category": "hidden gems",
+  "tip": "Hidden gem: Banthat Thong Road (Near Chulalongkorn University, Bangkok). Bangkok's premier modern culinary destination, packed with legendary street food stalls, trendy dessert cafés and bustling hot-pot spots. Opening hours: Daily; most shops and vendors about 3:00–4:00 PM until midnight or 1:00 AM."
+ },
+ {
+  "category": "hidden gems",
+  "tip": "Hidden gem: Phu Chi Fa (Chiang Rai Province, The North). A cliff-top viewpoint on the Laos border, famous for its sunrise over a sea of mist. Best in the cool season, roughly November to February. Opening hours: Hours vary, check before you go (sunrise is the highlight)."
+ },
+ {
+  "category": "hidden gems",
+  "tip": "Hidden gem: Pai Canyon (Mae Hong Son Province, The North). Narrow ridge paths winding over a red-earth canyon near Pai, popular for sunset views. Opening hours: Open during daylight (best near sunset)."
+ },
+ {
+  "category": "hidden gems",
+  "tip": "Hidden gem: Wat Pa Maha Chedi Kaew (Sisaket Province, The North). The \"Temple of a Million Bottles\": halls and buildings made from recycled glass bottles. Opening hours: Hours vary, check before you go."
+ },
+ {
+  "category": "hidden gems",
+  "tip": "Hidden gem: Koh Phayam (Ranong Province, Quiet islands). A laid-back Andaman island with no big resorts, quiet beaches and cashew farms. Best from November to April. Opening hours: Open 24 hours (reached by boat from Ranong)."
+ },
+ {
+  "category": "hidden gems",
+  "tip": "Hidden gem: Kudee Chin (Near Talat Noi, Bangkok). A small riverside community with the old Santa Cruz Church, a reminder of Bangkok's Portuguese roots. Good to combine with Talat Noi. Opening hours: Hours vary, check before you go."
  }
 ]

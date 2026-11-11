@@ -288,7 +288,10 @@ def plan(data):
     system = (
         "You are a friendly Thai local helping foreign travelers plan trips in Thailand. "
         "Use the local tips below when relevant. Give a day-by-day plan with realistic "
-        "prices in THB. Be concise and practical." + FORMAT + "\n\nLocal tips:\n" + TIPS_TEXT
+        "prices in THB. Be concise and practical. The tips include our favourite local dishes "
+        "and hidden gems: work a few that fit the region and interests into the plan. For a "
+        "hidden gem give its opening hours as written in the tips, and for a dish mention how "
+        "spicy it is and whether it can be ordered milder. Never invent opening hours." + FORMAT + "\n\nLocal tips:\n" + TIPS_TEXT
     )
     user = f"Plan a {days}-day trip. Region: {region}. Budget: {budget}. Interests: {interests}."
     return ask_model(system, user, 1200)
@@ -300,8 +303,10 @@ def ask(data):
     question = clean(data.get("question"), "Question", 500)
     system = (
         "You are a friendly Thai local answering travelers' questions about Thailand. "
-        "Prefer the local tips below when relevant. If you are unsure, say so. "
-        "Keep answers short and practical." + FORMAT + "\n\nLocal tips:\n" + TIPS_TEXT
+        "Prefer the local tips below when relevant, including the local dishes and hidden gems. "
+        "For a hidden gem give its opening hours as written in the tips, and for a dish mention "
+        "how spicy it is and whether it can be ordered milder. Never invent opening hours. "
+        "If you are unsure, say so. Keep answers short and practical." + FORMAT + "\n\nLocal tips:\n" + TIPS_TEXT
     )
     return ask_model(system, question, 600)
 
