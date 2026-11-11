@@ -14,7 +14,7 @@
 *{box-sizing:border-box}
 html{background:var(--bg)}
 body{margin:0;background:transparent;color:var(--text);font-family:"Source Serif 4",Georgia,"Times New Roman",serif;font-size:1.05rem;line-height:1.5}
-main{max-width:600px;margin:0 auto;padding:16px 16px 130px}
+main{width:100%;max-width:1760px;margin:0 auto;padding:16px clamp(16px,3.5vw,48px) 130px}
 h1{font-size:1.3rem}
 .flag{vertical-align:-3px;margin-right:8px;border-radius:3px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
@@ -212,6 +212,24 @@ html,*{scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--accent) 55%,
 .pill.get{background:color-mix(in srgb,var(--get) 18%,transparent);color:var(--get)}
 .pill.even{background:var(--line);color:var(--muted)}
 
+/* ----- wide screens: use the whole window ----- */
+@media (min-width:760px){
+  .chips{flex-wrap:wrap;overflow:visible}
+  #fList,#gList,#pList,#moneyIn,#tripNone{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;align-items:start}
+  #fList>.card,#gList>.card,#pList>.card,#moneyIn>.card,#tripNone>.card{margin-bottom:0}
+  #moneyIn{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #moneyIn>.sect{grid-column:1/-1;margin:14px 0 0}
+  #tripNone{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .food-pic{aspect-ratio:21/9;max-height:440px}
+}
+@media (min-width:900px){
+  #plan,#ask{display:grid;grid-template-columns:minmax(300px,440px) minmax(0,1fr);column-gap:36px;align-items:start}
+  #plan:not(:has(.out:not(:empty))),#ask:not(:has(.out:not(:empty))){grid-template-columns:minmax(300px,560px)}
+  #plan .out,#ask .out{margin-top:0}
+}
+@media (min-width:1500px){ #fList,#gList,#pList{grid-template-columns:repeat(4,minmax(0,1fr))} }
+@media (min-width:1100px) and (max-width:1499px){ #fList,#gList,#pList{grid-template-columns:repeat(3,minmax(0,1fr))} }
+
 /* ----- local food ----- */
 .food-pic{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;object-position:center 40%;border-radius:14px;margin:0 0 12px;border:1px solid var(--line)}
 .spice-say{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;padding:10px 12px;border-radius:12px;background:color-mix(in srgb,var(--accent) 18%,transparent)}
@@ -295,6 +313,7 @@ html,*{scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--accent) 55%,
 </section>
 
 <section id="plan" class="card" hidden>
+  <div class="pform">
   <label>Days</label><div class="stepper"><button type="button" data-step="-1" aria-label="Fewer days">&minus;</button><input id="days" type="number" min="1" max="30" value="5"><button type="button" data-step="1" aria-label="More days">+</button></div>
   <label>Region</label><input id="region" value="Bangkok and Chiang Mai">
   <label>Budget</label>
@@ -302,13 +321,16 @@ html,*{scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--accent) 55%,
   <label>Interests</label><input id="interests" value="food, temples, nature">
   <button class="go" id="planBtn">Create plan</button>
   <p class="note" id="planNote" hidden>The plan is saved to your trip, so your companions see it too.</p>
+  </div>
   <div class="out" id="planOut"></div>
 </section>
 
 <section id="ask" class="card" hidden>
+  <div class="pform">
   <label>Your question</label>
   <textarea id="q" rows="3" placeholder="e.g. How much should a taxi from the airport cost?"></textarea>
   <button class="go" id="askBtn">Ask</button>
+  </div>
   <div class="out" id="askOut"></div>
 </section>
 
