@@ -229,6 +229,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
     <div class="seg" id="spiceSeg"></div>
     <div class="spice-say" id="spiceSay"></div>
   </div>
+  <div class="chips" id="fChips"></div>
   <div id="fList"></div>
 </section>
 
@@ -838,12 +839,34 @@ document.querySelectorAll(".stepper button").forEach(b => b.onclick = () => {
 
 // ----- local food -----
 const DISHES = [
-  {region: "North", name: "Khao Soi", th: "ข้าวซอย", desc: "Curry noodle soup with crispy egg noodles on top, pickled mustard greens and lime.", order: "Ask for 'khao soi gai' (chicken) — the classic."},
-  {region: "Isan", name: "Som Tam", th: "ส้มตำ", desc: "Pounded green papaya salad: sour, salty, sweet and fiery all at once.", order: "Say 'som tam Thai, phet noi' for the sweeter, milder version."},
-  {region: "Everywhere", name: "Pad Kra Pao", th: "ผัดกะเพรา", desc: "Holy basil stir-fry over rice — the dish Thais actually eat for lunch.", order: "Add 'kai dao' for a crispy fried egg on top."},
-  {region: "Central", name: "Boat Noodles", th: "ก๋วยเตี๋ยวเรือ", desc: "Tiny, rich bowls of noodle soup. Locals stack up five or six empty bowls.", order: "Point at a noodle type, then 'nam tok' for the rich broth."},
-  {region: "South", name: "Gaeng Tai Pla", th: "แกงไตปลา", desc: "A deep, funky southern curry. Bold, aromatic, unforgettable.", order: "Eat it with rice and the free plate of fresh vegetables."},
-  {region: "Everywhere", name: "Mango Sticky Rice", th: "ข้าวเหนียวมะม่วง", desc: "Sweet coconut sticky rice with ripe mango. Best in April and May.", order: "Look for a cart with a pile of yellow 'nam dok mai' mangoes."}
+  {"cat": "Everyday plates", "region": "Everywhere", "name": "Pad Kra Pao", "th": "ผัดกะเพรา", "desc": "Holy basil stir-fry over rice — the dish Thais actually eat for lunch. Minced pork (moo), chicken (gai) or beef (neua) with holy basil, garlic and fresh chilies.", "order": "Add 'kai dao' for a crispy fried egg on top."},
+  {"cat": "Everyday plates", "region": "Everyday plate", "name": "Khao Man Gai", "th": "ข้าวมันไก่", "desc": "Thai-style Hainanese chicken rice. Poached chicken over garlic-and-fat-aromatic rice, with a tangy fermented soybean, chili and ginger dipping sauce and a clear winter melon soup."},
+  {"cat": "Everyday plates", "region": "Everyday plate", "name": "Khao Moo Daeng / Moo Krob", "th": "ข้าวหมูแดง / หมูกรอบ", "desc": "Roasted red barbecue pork and extra-crispy pork belly over rice, with a sweet-savory red gravy, boiled eggs and cucumber."},
+  {"cat": "Everyday plates", "region": "Everyday plate", "name": "Pad Kana Moo Krob", "th": "ผัดคะน้าหมูกรอบ", "desc": "Crispy pork belly stir-fried with Chinese broccoli, garlic and bird's eye chilies in oyster sauce."},
+  {"cat": "Everyday plates", "region": "Everyday plate", "name": "Khao Kha Moo", "th": "ข้าวขาหมู", "desc": "Melt-in-your-mouth braised pork leg stewed in aromatic five-spice broth, served over rice with pickled mustard greens, raw garlic, chilies and a sour chili-vinegar dip."},
+  {"cat": "Everyday plates", "region": "Everyday plate", "name": "Pad Prik Gaeng", "th": "ผัดพริกแกง", "desc": "Meat of your choice stir-fried directly in red curry paste with long beans, kaffir lime leaves and red chilies, over rice."},
+  {"cat": "Noodles", "region": "Central", "name": "Boat Noodles", "th": "ก๋วยเตี๋ยวเรือ", "desc": "Tiny, rich bowls of noodle soup with an intensely flavorful dark broth (pig or cow blood, cinnamon, star anise), pork balls, tender meat and crispy pork cracklings. Locals stack up five or six empty bowls.", "order": "Point at a noodle type, then 'nam tok' for the rich broth."},
+  {"cat": "Noodles", "region": "Noodles", "name": "Yen Ta Fo", "th": "เย็นตาโฟ", "desc": "Wide rice noodles in a pink broth flavored with fermented red bean curd, topped with fish balls, squid, morning glory and fried wonton skins."},
+  {"cat": "Noodles", "region": "Noodles", "name": "Kuaitiao Tom Yum", "th": "ก๋วยเตี๋ยวต้มยำ", "desc": "Noodle soup loaded with minced pork, fish balls, crushed peanuts, lime juice, dried chili flakes and chili paste."},
+  {"cat": "Noodles", "region": "Noodles", "name": "Pad See Ew", "th": "ผัดซีอิ๊ว", "desc": "Wide flat rice noodles stir-fried in a hot wok with dark soy sauce, egg and Chinese broccoli."},
+  {"cat": "Noodles", "region": "Noodles", "name": "Rad Na", "th": "ราดหน้า", "desc": "Wide rice noodles or crispy egg noodles topped with a thick, savory gravy made with pork and Chinese broccoli."},
+  {"cat": "Isan", "region": "Isan", "name": "Som Tam", "th": "ส้มตำ", "desc": "Pounded green papaya salad: sour, salty, sweet and fiery all at once. Locals often prefer Som Tam Poo Pla Ra (with salted crab and pungent fermented fish sauce) over the sweeter Som Tam Thai.", "order": "Say 'som tam Thai, phet noi' for the sweeter, milder version."},
+  {"cat": "Isan", "region": "Isan", "name": "Larb & Nam Tok", "th": "ลาบ / น้ำตก", "desc": "Spicy minced meat salad (larb) or sliced grilled pork or beef salad (nam tok), tossed with lime juice, fish sauce, chilies, mint, toasted ground rice (khao khua) and shallots."},
+  {"cat": "Isan", "region": "Isan", "name": "Gai Yang", "th": "ไก่ย่าง", "desc": "Marinated lemongrass grilled chicken served with a spicy tamarind dipping sauce (nam jim jaew)."},
+  {"cat": "Isan", "region": "Isan", "name": "Tom Saep", "th": "ต้มแซ่บ", "desc": "Clear, fiercely hot and sour herbal soup loaded with pork ribs or intestine, lemongrass, galangal, kaffir lime and dry chilies."},
+  {"cat": "Isan", "region": "Isan", "name": "Kor Moo Yang", "th": "คอหมูย่าง", "desc": "Tender grilled pork neck with a sweet-savory marinade, dipped in nam jim jaew."},
+  {"cat": "North", "region": "North", "name": "Khao Soi", "th": "ข้าวซอย", "desc": "Rich, coconut curry noodle soup with chicken or beef over soft egg noodles, topped with crisp fried noodles, pickled mustard greens, raw shallots and lime.", "order": "Ask for 'khao soi gai' (chicken) — the classic."},
+  {"cat": "North", "region": "North (Lanna)", "name": "Khanom Chin Nam Ngiao", "th": "ขนมจีนน้ำเงี้ยว", "desc": "Fermented rice noodles served with a tangy, tomato-based pork ragout stewed with dried silk cotton flowers and pork blood cubes."},
+  {"cat": "North", "region": "North (Lanna)", "name": "Sai Oua", "th": "ไส้อั่ว", "desc": "Grilled herbal pork sausage packed with red curry paste, lemongrass, kaffir lime leaves and fresh turmeric."},
+  {"cat": "South", "region": "South (Pak Tai)", "name": "Khua Kling", "th": "คั่วกลิ้ง", "desc": "Extremely spicy dry-fried curry of minced pork or beef, cooked down with southern yellow curry paste and shredded kaffir lime leaves."},
+  {"cat": "South", "region": "South (Pak Tai)", "name": "Gaeng Som", "th": "แกงส้ม", "desc": "Sour and fiery turmeric-yellow fish curry cooked with bamboo shoots or green papaya, without coconut milk."},
+  {"cat": "South", "region": "South", "name": "Gaeng Tai Pla", "th": "แกงไตปลา", "desc": "Intense, dark, pungent curry made from fermented fish entrails, dried chili, bamboo shoots, eggplant and pumpkin. Bold, aromatic, unforgettable.", "order": "Eat it with rice and the free plate of fresh vegetables."},
+  {"cat": "Family dishes", "region": "Family dish", "name": "Pla Neung Manao", "th": "ปลานึ่งมะนาว", "desc": "Whole steamed sea bass submerged in a boiling chili, garlic, cilantro and lime broth."},
+  {"cat": "Family dishes", "region": "Family dish", "name": "Pla Tod Nam Pla", "th": "ปลาทอดน้ำปลา", "desc": "Deep-fried whole fish topped with a sweet fish sauce reduction, served with a green mango dip."},
+  {"cat": "Family dishes", "region": "Family dish", "name": "Tom Kha Gai", "th": "ต้มข่าไก่", "desc": "Creamy coconut broth infused with galangal root, lemongrass, kaffir lime leaves, mushrooms and chicken."},
+  {"cat": "Family dishes", "region": "Family dish", "name": "Gaeng Keow Wan", "th": "แกงเขียวหวาน", "desc": "Green curry cooked with coconut milk, Thai eggplant, sweet basil, and beef or chicken."},
+  {"cat": "Family dishes", "region": "Family dish", "name": "Nam Prik Kapi", "th": "น้ำพริกกะปิ", "desc": "Umami-rich shrimp paste dip pounded with lime, garlic and chilies, eaten with fried mackerel (pla tu), steamed vegetables and fried acacia egg omelets (khai chao cha-om)."},
+  {"cat": "Sweets", "region": "Everywhere", "name": "Mango Sticky Rice", "th": "ข้าวเหนียวมะม่วง", "desc": "Sweet coconut sticky rice with ripe mango. Best in April and May.", "order": "Look for a cart with a pile of yellow 'nam dok mai' mangoes."}
 ];
 const SPICE = [
   {label: "None", th: "ไม่เผ็ด", rom: "mâi phèt", en: "Not spicy"},
@@ -851,7 +874,7 @@ const SPICE = [
   {label: "Hot", th: "เผ็ดๆ", rom: "phèt phèt", en: "Spicy"},
   {label: "Thai hot", th: "เผ็ดมาก", rom: "phèt mâak", en: "Very spicy, the way Thais eat it"}
 ];
-let spice = 0;
+let spice = 0, fCat = "All";
 try { spice = Math.min(3, Math.max(0, +localStorage.getItem("spice") || 0)); } catch (e) {}
 function renderFood() {
   const seg = $("spiceSeg"); seg.textContent = "";
@@ -875,8 +898,15 @@ function renderFood() {
   play.className = "play"; play.textContent = "▶"; play.setAttribute("aria-label", "Play audio");
   play.onclick = () => speak(sp.th + (end ? end.th : ""));
   say.append(box, play);
+  const chips = $("fChips"); chips.textContent = "";
+  ["All", ...new Set(DISHES.map(d => d.cat))].forEach(c => {
+    const b = document.createElement("button");
+    b.textContent = c; if (c === fCat) b.className = "on";
+    b.onclick = () => { fCat = c; renderFood(); };
+    chips.appendChild(b);
+  });
   const list = $("fList"); list.textContent = "";
-  DISHES.forEach(d => {
+  DISHES.filter(d => fCat === "All" || d.cat === fCat).forEach(d => {
     const card = document.createElement("div"); card.className = "card dish";
     const tag = document.createElement("span"); tag.className = "tag"; tag.textContent = d.region;
     const row = document.createElement("div"); row.className = "row";
@@ -889,9 +919,13 @@ function renderFood() {
     pl.onclick = () => speak(d.th);
     row.append(left, pl);
     const p = document.createElement("p"); p.textContent = d.desc;
-    const o = document.createElement("div"); o.className = "order";
-    const bo = document.createElement("b"); bo.textContent = "How to order: "; o.append(bo, d.order);
-    card.append(tag, row, p, o); list.appendChild(card);
+    card.append(tag, row, p);
+    if (d.order) {
+      const o = document.createElement("div"); o.className = "order";
+      const bo = document.createElement("b"); bo.textContent = "How to order: "; o.append(bo, d.order);
+      card.append(o);
+    }
+    list.appendChild(card);
   });
 }
 
