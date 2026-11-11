@@ -8,8 +8,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Noto+Serif+Thai:wght@400;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#faf7f2;--card:#fff;--text:#1f2430;--muted:#6b7280;--accent:#F9D84A;--on-accent:#1f2430;--line:#e8e2d9}
-@media (prefers-color-scheme:dark){:root{--bg:#16181d;--card:#1f232b;--text:#eceef2;--muted:#9aa3b2;--line:#2e3340}}
+:root{--bg:#faf7f2;--card:#fff;--text:#1f2430;--muted:#6b7280;--accent:#F9D84A;--on-accent:#1f2430;--line:#e8e2d9;--heat:#D6454F}
+@media (prefers-color-scheme:dark){:root{--bg:#16181d;--card:#1f232b;--text:#eceef2;--muted:#9aa3b2;--line:#2e3340;--heat:#FF8A93}}
 *{box-sizing:border-box}
 html{background:var(--bg)}
 body{margin:0;background:transparent;color:var(--text);font-family:"Source Serif 4",Georgia,"Times New Roman",serif;font-size:1.05rem;line-height:1.5}
@@ -168,9 +168,9 @@ html,*{scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--accent) 55%,
 .dish p{margin:0 0 8px}
 .heat{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;margin:0 0 8px;font-size:.9rem}
 .heat .dots{display:inline-flex;gap:3px}
-.heat .dots i{width:11px;height:11px;border-radius:50%;border:1.5px solid #E4572E;box-sizing:border-box}
-.heat .dots i.f{background:#E4572E}
-.heat-warn{flex-basis:100%;color:#E4572E;font-size:.85rem;font-weight:600}
+.heat .dots i{width:11px;height:11px;border-radius:50%;border:1.5px solid var(--heat);box-sizing:border-box}
+.heat .dots i.f{background:var(--heat)}
+.heat-warn{flex-basis:100%;color:var(--heat);font-size:.85rem;font-weight:600}
 .dish .order{padding:8px 10px;border-left:4px solid var(--accent);border-radius:6px;background:color-mix(in srgb,var(--accent) 12%,transparent);font-size:.95rem}
 @media (max-width:480px){.dock{gap:4px;padding:8px 6px}.dock button{width:44px}}
 [hidden]{display:none!important}
