@@ -228,12 +228,39 @@ html,*{scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--accent) 55%,
   .food-pic{aspect-ratio:21/9;max-height:440px}
 }
 @media (min-width:900px){
-  #plan,#ask{display:grid;grid-template-columns:minmax(300px,440px) minmax(0,1fr);column-gap:36px;align-items:start}
-  #plan:not(:has(.out:not(:empty))),#ask:not(:has(.out:not(:empty))){grid-template-columns:minmax(300px,560px)}
-  #plan .out,#ask .out{margin-top:0}
+  #plan{display:grid;grid-template-columns:minmax(300px,440px) minmax(0,1fr);column-gap:36px;align-items:start}
+  #plan:not(:has(.out:not(:empty))){grid-template-columns:minmax(300px,560px)}
+  #plan .out{margin-top:0}
 }
 @media (min-width:1500px){ #fList,#gList,#pList{grid-template-columns:repeat(4,minmax(0,1fr))} }
 @media (min-width:1100px) and (max-width:1499px){ #fList,#gList,#pList{grid-template-columns:repeat(3,minmax(0,1fr))} }
+
+/* ----- ask a Thai local: chat-style page ----- */
+#ask{max-width:860px;margin:0 auto}
+.askhero{text-align:center;padding:26px 0 22px}
+.askicon{width:56px;height:56px;border-radius:16px;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;margin:0 auto 14px}
+.askicon svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.askhero h2{margin:0 0 8px;font-size:clamp(1.7rem,4.5vw,2.5rem);line-height:1.1}
+.askhero p{margin:0 auto;max-width:34em;color:var(--muted)}
+.askbox{display:flex;align-items:flex-end;gap:10px;padding:10px 10px 10px 20px;border:1px solid var(--line);border-radius:24px;background:color-mix(in srgb,var(--card) 88%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 12px 32px rgba(0,0,0,.22);transition:border-color .15s,box-shadow .15s}
+.askbox:focus-within{border-color:var(--accent);box-shadow:0 12px 32px rgba(0,0,0,.22),0 0 0 3px color-mix(in srgb,var(--accent) 28%,transparent)}
+.askbox textarea{flex:1;min-width:0;border:0;outline:0;background:transparent;resize:none;padding:10px 0;min-height:28px;max-height:200px;font-size:1.05rem;line-height:1.4;border-radius:0}
+.send{flex:none;width:46px;height:46px;border:0;border-radius:50%;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;cursor:pointer;transition:transform .12s,opacity .15s}
+.send:hover{transform:translateY(-1px)}
+.send:active{transform:scale(.92)}
+.send:disabled{opacity:.45;cursor:default;transform:none}
+.send svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.askmeta{display:flex;justify-content:space-between;gap:10px;margin:8px 14px 0;color:var(--muted);font-size:.8rem}
+.suggest{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:18px 0 4px}
+.suggest button{padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:color-mix(in srgb,var(--card) 80%,transparent);color:var(--text);font:inherit;font-size:.9rem;cursor:pointer;transition:background .15s,color .15s,border-color .15s}
+.suggest button:hover,.suggest button:focus-visible{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+#askRes{display:flex;flex-direction:column;gap:12px;margin-top:24px}
+#askRes[hidden]{display:none}
+.askq{align-self:flex-end;max-width:85%;padding:10px 16px;border-radius:18px 18px 4px 18px;background:var(--accent);color:var(--on-accent);font-weight:600;overflow-wrap:anywhere}
+.answer{padding:16px 18px;border:1px solid var(--line);border-radius:18px 18px 18px 4px;background:var(--card)}
+.answer .who{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-weight:700}
+.answer .who .av{background:#00C8C8;color:#1f2430;width:28px;height:28px;font-size:.8rem}
+.answer .out{margin-top:0}
 
 /* ----- local food ----- */
 .food-pic{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;object-position:center 40%;border-radius:14px;margin:0 0 12px;border:1px solid var(--line)}
@@ -330,13 +357,25 @@ html,*{scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--accent) 55%,
   <div class="out" id="planOut"></div>
 </section>
 
-<section id="ask" class="card" hidden>
-  <div class="pform">
-  <label>Your question</label>
-  <textarea id="q" rows="3" placeholder="e.g. How much should a taxi from the airport cost?"></textarea>
-  <button class="go" id="askBtn">Ask</button>
+<section id="ask" hidden>
+  <div class="askhero">
+    <span class="askicon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></span>
+    <h2>Ask a Thai local</h2>
+    <p>Prices, taxis, scams, food, manners. Ask anything about Thailand and get a straight answer.</p>
   </div>
-  <div class="out" id="askOut"></div>
+  <div class="askbox">
+    <textarea id="q" rows="1" maxlength="500" placeholder="Ask anything about Thailand…" aria-label="Your question"></textarea>
+    <button class="send" id="askBtn" type="button" aria-label="Send question"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg></button>
+  </div>
+  <div class="askmeta"><span>Enter to send · Shift+Enter for a new line</span><span id="qCount">0 / 500</span></div>
+  <div class="suggest" id="askSug" aria-label="Example questions"></div>
+  <div id="askRes" hidden>
+    <div class="askq" id="askQ"></div>
+    <div class="answer">
+      <div class="who"><span class="av">T</span>Thai local</div>
+      <div class="out" id="askOut"></div>
+    </div>
+  </div>
 </section>
 
 <section id="food" hidden>
@@ -706,7 +745,28 @@ $("planBtn").onclick = async () => {
     if (r.ok) { trip = r.data; } else banner(r.data.error || "Could not save the plan.", true);
   }
 };
-$("askBtn").onclick = () => callApi("/api/ask", {question: $("q").value}, $("askOut"), $("askBtn"));
+// ask page: auto-growing box, Enter to send, example questions
+const SUGGEST = ["How much should a taxi from the airport cost?", "What should I wear to a temple?", "What are common scams to avoid?", "How do I get around Bangkok by boat?", "Which Thai dishes are not spicy?"];
+const qBox = $("q");
+function fitQ() {
+  qBox.style.height = "auto"; if (qBox.scrollHeight) qBox.style.height = Math.min(qBox.scrollHeight, 200) + "px";
+  $("qCount").textContent = qBox.value.length + " / 500";
+}
+async function sendQ(text) {
+  const question = (text !== undefined ? text : qBox.value).trim();
+  if (!question) { qBox.focus(); return; }
+  qBox.value = question; fitQ();
+  $("askRes").hidden = false; $("askQ").textContent = question;
+  $("askBtn").disabled = true; qBox.disabled = true;
+  await callApi("/api/ask", {question}, $("askOut"), $("askBtn"));
+  $("askBtn").disabled = false; qBox.disabled = false; qBox.focus();
+  $("askRes").scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "nearest"});
+}
+qBox.addEventListener("input", fitQ);
+qBox.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey && !e.isComposing) { e.preventDefault(); sendQ(); } });
+$("askBtn").onclick = () => sendQ();
+SUGGEST.forEach(t => { const b = document.createElement("button"); b.type = "button"; b.textContent = t; b.onclick = () => sendQ(t); $("askSug").appendChild(b); });
+fitQ(); new ResizeObserver(fitQ).observe($("ask"));
 
 // ----- expenses -----
 async function addExpense() {
