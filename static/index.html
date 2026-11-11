@@ -174,6 +174,11 @@ html,*{scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--accent) 55%,
 .gem h3{margin:8px 0 0;font-size:1.25rem;line-height:1.15}
 .gem .place{color:var(--muted);font-size:.95rem;margin-bottom:6px}
 .gem p{margin:0 0 8px}
+.gem .ghead{display:flex;align-items:center;gap:12px;margin:8px 0 8px}
+.gem .ghead h3{margin:0}
+.gem .ghead .place{margin:2px 0 0}
+.gicon{flex:none;width:44px;height:44px;border-radius:12px;background:var(--accent);color:var(--on-accent);display:grid;place-items:center}
+.gicon svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .gem .hours{display:flex;align-items:flex-start;gap:8px;padding:8px 10px;border-left:4px solid var(--accent);border-radius:6px;background:color-mix(in srgb,var(--accent) 12%,transparent);font-size:.95rem}
 .gem .hours svg{flex:none;width:18px;height:18px;margin-top:2px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .gem .map{display:inline-block;margin-top:10px;padding:6px 14px;border:1px solid var(--line);border-radius:999px;color:var(--text);text-decoration:none;font-size:.9rem;transition:background .15s,color .15s}
@@ -989,6 +994,8 @@ const GEMS = [
   {"cat": "Quiet islands", "place": "Ranong Province", "name": "Koh Phayam", "desc": "A laid-back Andaman island with no big resorts, quiet beaches and cashew farms. Best from November to April.", "hours": "Open 24 hours (reached by boat from Ranong)"},
   {"cat": "Bangkok", "place": "Near Talat Noi", "name": "Kudee Chin", "desc": "A small riverside community with the old Santa Cruz Church, a reminder of Bangkok's Portuguese roots. Good to combine with Talat Noi.", "hours": "Hours vary, check before you go"}
 ];
+const GEM_SVG = {"temple": "<line x1=\"3\" x2=\"21\" y1=\"22\" y2=\"22\"/><line x1=\"6\" x2=\"6\" y1=\"18\" y2=\"11\"/><line x1=\"10\" x2=\"10\" y1=\"18\" y2=\"11\"/><line x1=\"14\" x2=\"14\" y1=\"18\" y2=\"11\"/><line x1=\"18\" x2=\"18\" y1=\"18\" y2=\"11\"/><polygon points=\"12 2 20 7 4 7\"/>", "mountain": "<path d=\"m8 3 4 8 5-5 5 15H2L8 3z\"/>", "palm": "<path d=\"M12.5 22c0-6 .5-9 2.5-12\"/><path d=\"M15 10C13 5 8 5 5 8\"/><path d=\"M15 10C16 5 20 5 22 8\"/><path d=\"M15 10C11 9 8 11 7 14\"/><path d=\"M15 10C18 9 21 11 21 14\"/><path d=\"M3 22h18\"/>", "bike": "<circle cx=\"18.5\" cy=\"17.5\" r=\"3.5\"/><circle cx=\"5.5\" cy=\"17.5\" r=\"3.5\"/><circle cx=\"15\" cy=\"5\" r=\"1\"/><path d=\"M12 17.5V14l-3-3 4-3 2 3h2\"/>", "shop": "<path d=\"M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z\"/><path d=\"M3 6h18\"/><path d=\"M16 10a4 4 0 0 1-8 0\"/>", "food": "<path d=\"M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2\"/><path d=\"M7 2v20\"/><path d=\"M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7\"/>", "bridge": "<path d=\"M2 18h20\"/><path d=\"M4 18c0-6 4-9 8-9s8 3 8 9\"/><path d=\"M8 18v-4\"/><path d=\"M12 18V9\"/><path d=\"M16 18v-4\"/>", "pin": "<path d=\"M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z\"/><circle cx=\"12\" cy=\"10\" r=\"3\"/>", "building": "<path d=\"M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z\"/><path d=\"M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2\"/><path d=\"M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2\"/><path d=\"M10 6h4\"/><path d=\"M10 10h4\"/><path d=\"M10 14h4\"/><path d=\"M10 18h4\"/>"};
+const GEM_ICON = {"Wat Phumin": "temple", "Wat Phra That Pha Sorn Kaew": "temple", "Wat Pa Maha Chedi Kaew": "temple", "Koh Kood": "palm", "Ko Kradan": "palm", "Ko Yao Noi": "palm", "Ko Lipe": "palm", "Ko Tao": "palm", "Koh Phayam": "palm", "Sampheng Market (Talat Sampheng)": "shop", "Tuek Daeng Chatuchak (The Red Building)": "shop", "Phu Chi Fa": "mountain", "Pai Canyon": "mountain", "Talat Noi": "building", "Kudee Chin": "building", "Banthat Thong Road": "food", "Mon Bridge": "bridge", "Bang Kachao": "bike"};
 let gCat = "All";
 function renderGems() {
   const chips = $("gChips"); chips.textContent = "";
@@ -1002,8 +1009,13 @@ function renderGems() {
   GEMS.filter(g => gCat === "All" || g.cat === gCat).forEach(g => {
     const card = document.createElement("div"); card.className = "card gem";
     const tag = document.createElement("span"); tag.className = "tag"; tag.textContent = g.cat;
+    const head = document.createElement("div"); head.className = "ghead";
+    const ic = document.createElement("span"); ic.className = "gicon"; ic.setAttribute("aria-hidden", "true");
+    ic.insertAdjacentHTML("afterbegin", '<svg viewBox="0 0 24 24">' + GEM_SVG[GEM_ICON[g.name] || "pin"] + '</svg>');
+    const ttl = document.createElement("div");
     const h = document.createElement("h3"); h.textContent = g.name;
     const pl = document.createElement("div"); pl.className = "place"; pl.textContent = g.place;
+    ttl.append(h, pl); head.append(ic, ttl);
     const p = document.createElement("p"); p.textContent = g.desc;
     const hr = document.createElement("div"); hr.className = "hours";
     hr.insertAdjacentHTML("afterbegin", '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>');
@@ -1011,7 +1023,7 @@ function renderGems() {
     const a = document.createElement("a"); a.className = "map"; a.textContent = "Open in Maps";
     a.href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(g.name + ", " + g.place + ", Thailand");
     a.target = "_blank"; a.rel = "noopener noreferrer";
-    card.append(tag, h, pl, p, hr, a); list.appendChild(card);
+    card.append(tag, head, p, hr, a); list.appendChild(card);
   });
 }
 
