@@ -9,8 +9,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Noto+Serif+Thai:wght@400;600&display=swap" rel="stylesheet">
 <script>try{if(localStorage.getItem("theme")==="light")document.documentElement.dataset.theme="light"}catch(e){}</script>
 <style>
-:root{color-scheme:dark;--bg:#16181d;--card:#1f232b;--text:#eceef2;--muted:#9aa3b2;--accent:#F9D84A;--on-accent:#1f2430;--line:#2e3340;--heat:#FF8A93}
-:root[data-theme="light"]{color-scheme:light;--bg:#faf7f2;--card:#fff;--text:#1f2430;--muted:#6b7280;--line:#e8e2d9;--heat:#D6454F}
+:root{color-scheme:dark;--bg:#16181d;--card:#1f232b;--text:#eceef2;--muted:#9aa3b2;--accent:#F9D84A;--on-accent:#1f2430;--line:#2e3340;--heat:#FF8A93;--get:#4FE3E3}
+:root[data-theme="light"]{color-scheme:light;--bg:#faf7f2;--card:#fff;--text:#1f2430;--muted:#6b7280;--line:#e8e2d9;--heat:#D6454F;--get:#00828A}
 *{box-sizing:border-box}
 html{background:var(--bg)}
 body{margin:0;background:transparent;color:var(--text);font-family:"Source Serif 4",Georgia,"Times New Roman",serif;font-size:1.05rem;line-height:1.5}
@@ -184,6 +184,29 @@ html,*{scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--accent) 55%,
 /* ----- trip: expenses live under the trip code ----- */
 .sect{margin:22px 0 10px}
 
+
+/* ----- who owes whom ----- */
+.sumrow{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0 4px}
+.stat{padding:10px 12px;border-radius:12px;background:color-mix(in srgb,var(--accent) 14%,transparent)}
+.stat small{display:block;color:var(--muted);font-size:.8rem}
+.stat b{font-size:1.15rem}
+.sub{margin:14px 0 6px;color:var(--muted);font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.pay{display:flex;flex-direction:column;gap:6px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;margin-bottom:8px}
+.pay .who{display:flex;align-items:center;gap:8px;min-width:0}
+.pay .verb{color:var(--muted);font-size:.9rem}
+.pay .amt{font-weight:700;font-size:1.3rem;white-space:nowrap;padding-left:2px}
+.who .nm{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.bal .nm{font-weight:600;overflow-wrap:anywhere}
+.av{width:30px;height:30px;border-radius:50%;display:inline-grid;place-items:center;font-weight:700;font-size:.85rem;flex:none}
+.settled{padding:10px 12px;border-radius:12px;background:color-mix(in srgb,var(--get) 16%,transparent);color:var(--get);font-weight:700}
+.bal{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--line)}
+.bal .info{flex:1;min-width:0}
+.bal small{display:block;color:var(--muted);font-size:.82rem}
+.pill{padding:3px 10px;border-radius:999px;font-size:.85rem;font-weight:700;white-space:nowrap}
+.pill.owe{background:color-mix(in srgb,var(--heat) 18%,transparent);color:var(--heat)}
+.pill.get{background:color-mix(in srgb,var(--get) 18%,transparent);color:var(--get)}
+.pill.even{background:var(--line);color:var(--muted)}
+
 /* ----- local food ----- */
 .food-pic{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;object-position:center 40%;border-radius:14px;margin:0 0 12px;border:1px solid var(--line)}
 .spice-say{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;padding:10px 12px;border-radius:12px;background:color-mix(in srgb,var(--accent) 18%,transparent)}
@@ -252,7 +275,13 @@ html,*{scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--accent) 55%,
       <button class="go" id="addBtn">Add expense</button>
     </div>
     <div class="card"><b>Expenses</b><div id="list"></div></div>
-    <div class="card"><b>Who owes whom</b><div id="settle"></div></div>
+    <div class="card"><b>Who owes whom</b>
+      <div class="sumrow" id="sumRow"></div>
+      <div class="sub">Settle up</div>
+      <div id="settle"></div>
+      <div class="sub">Balance for each person</div>
+      <div id="balances"></div>
+    </div>
     <div class="card"><b>Travelers</b>
       <input id="editPeople" aria-label="Travelers">
       <button class="go ghost" id="savePeople">Save travelers</button>
@@ -707,26 +736,65 @@ function renderMoney() {
     row.append(t, x); $("list").appendChild(row);
   });
 
-  const bal = Object.fromEntries(ps.map(p => [p, 0]));
-  trip.expenses.forEach(e => {
-    if (!(e.payer in bal)) return;
-    bal[e.payer] += e.amount;
-    ps.forEach(p => bal[p] -= e.amount / ps.length);
+  // --- who owes whom ---
+  const money = n => n.toLocaleString("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2});
+  const AV = [["#3E7DCC", "#fff"], ["#00C8C8", "#1f2430"], ["#8CC0FF", "#1f2430"], ["#F9D84A", "#1f2430"], ["#8F9CB3", "#1f2430"], ["#4D525A", "#fff"]];
+  const avatar = name => {
+    const [bg, fg] = AV[Math.max(0, ps.indexOf(name)) % AV.length];
+    const a = document.createElement("span"); a.className = "av"; a.setAttribute("aria-hidden", "true");
+    a.style.background = bg; a.style.color = fg; a.textContent = (name.trim()[0] || "?").toUpperCase();
+    return a;
+  };
+  const nameEl = name => { const n = document.createElement("span"); n.className = "nm"; n.textContent = name; return n; };
+  const paid = Object.fromEntries(ps.map(p => [p, 0]));
+  let total = 0;
+  trip.expenses.forEach(e => { if (e.payer in paid) { paid[e.payer] += e.amount; total += e.amount; } });
+  const share = ps.length ? total / ps.length : 0;
+  const bal = Object.fromEntries(ps.map(p => [p, paid[p] - share]));
+
+  const sum = $("sumRow"); sum.textContent = "";
+  [["Total spent", money(total) + " THB"], ["Each person's share", money(share) + " THB"]].forEach(([k, v]) => {
+    const d = document.createElement("div"); d.className = "stat";
+    const sm = document.createElement("small"); sm.textContent = k;
+    const b = document.createElement("b"); b.textContent = v;
+    d.append(sm, b); sum.appendChild(d);
   });
+
   const debt = [], cred = [];
   Object.entries(bal).forEach(([p, v]) => { if (v < -0.005) debt.push([p, -v]); else if (v > 0.005) cred.push([p, v]); });
   $("settle").textContent = "";
   let i = 0, j = 0, any = false;
   while (i < debt.length && j < cred.length) {
     const x = Math.min(debt[i][1], cred[j][1]);
-    const d = document.createElement("div");
-    d.textContent = `${debt[i][0]} pays ${cred[j][0]} ${x.toFixed(2)} THB`;
-    $("settle").appendChild(d); any = true;
+    const row = document.createElement("div"); row.className = "pay";
+    const who = document.createElement("div"); who.className = "who";
+    const verb = document.createElement("span"); verb.className = "verb"; verb.textContent = "pays";
+    who.append(avatar(debt[i][0]), nameEl(debt[i][0]), verb, avatar(cred[j][0]), nameEl(cred[j][0]));
+    const amt = document.createElement("div"); amt.className = "amt"; amt.textContent = money(x) + " THB";
+    row.append(who, amt); $("settle").appendChild(row); any = true;
     debt[i][1] -= x; cred[j][1] -= x;
     if (debt[i][1] < 0.005) i++;
     if (cred[j][1] < 0.005) j++;
   }
-  if (!any) $("settle").textContent = trip.expenses.length ? "All settled." : "Nothing to settle yet.";
+  if (!any) {
+    const d = document.createElement("div"); d.className = "settled";
+    d.textContent = trip.expenses.length ? "✓ All settled. Nobody owes anything." : "Nothing to settle yet. Add an expense above.";
+    if (!trip.expenses.length) { d.className = ""; d.style.color = "var(--muted)"; }
+    $("settle").appendChild(d);
+  }
+
+  const bw = $("balances"); bw.textContent = "";
+  ps.forEach(p => {
+    const row = document.createElement("div"); row.className = "bal";
+    const info = document.createElement("div"); info.className = "info";
+    const sm = document.createElement("small"); sm.textContent = `Paid ${money(paid[p])} · Share ${money(share)}`;
+    info.append(nameEl(p), sm);
+    const v = bal[p], pill = document.createElement("span");
+    if (v > 0.005) { pill.className = "pill get"; pill.textContent = "Gets back " + money(v); }
+    else if (v < -0.005) { pill.className = "pill owe"; pill.textContent = "Owes " + money(-v); }
+    else { pill.className = "pill even"; pill.textContent = "Even"; }
+    row.append(avatar(p), info, pill); bw.appendChild(row);
+  });
 }
 
 // ----- animated beams background (port of the 21st.dev BeamsBackground, no libraries) -----
