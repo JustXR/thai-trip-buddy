@@ -146,6 +146,16 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 .stepper button:active{transform:scale(.94)}
 .stepper button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
+
+/* ----- scroll bars: slim, transparent track, theme-coloured thumb ----- */
+html,*{scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--accent) 55%,transparent) transparent}
+@supports not (scrollbar-color:auto){
+  ::-webkit-scrollbar{width:8px;height:8px}
+  ::-webkit-scrollbar-track{background:transparent}
+  ::-webkit-scrollbar-thumb{background:color-mix(in srgb,var(--accent) 55%,transparent);border-radius:8px}
+  ::-webkit-scrollbar-thumb:hover{background:var(--accent)}
+}
+
 /* ----- local food ----- */
 .food-pic{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;object-position:center 40%;border-radius:14px;margin:0 0 12px;border:1px solid var(--line)}
 .spice-say{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;padding:10px 12px;border-radius:12px;background:color-mix(in srgb,var(--accent) 18%,transparent)}
@@ -866,7 +876,22 @@ const DISHES = [
   {"cat": "Family dishes", "region": "Family dish", "name": "Tom Kha Gai", "th": "ต้มข่าไก่", "desc": "Creamy coconut broth infused with galangal root, lemongrass, kaffir lime leaves, mushrooms and chicken."},
   {"cat": "Family dishes", "region": "Family dish", "name": "Gaeng Keow Wan", "th": "แกงเขียวหวาน", "desc": "Green curry cooked with coconut milk, Thai eggplant, sweet basil, and beef or chicken."},
   {"cat": "Family dishes", "region": "Family dish", "name": "Nam Prik Kapi", "th": "น้ำพริกกะปิ", "desc": "Umami-rich shrimp paste dip pounded with lime, garlic and chilies, eaten with fried mackerel (pla tu), steamed vegetables and fried acacia egg omelets (khai chao cha-om)."},
-  {"cat": "Sweets", "region": "Everywhere", "name": "Mango Sticky Rice", "th": "ข้าวเหนียวมะม่วง", "desc": "Sweet coconut sticky rice with ripe mango. Best in April and May.", "order": "Look for a cart with a pile of yellow 'nam dok mai' mangoes."}
+  {"cat": "Sweets", "region": "Sticky rice & fruit", "name": "Mango Sticky Rice", "th": "ข้าวเหนียวมะม่วง", "desc": "Khao niew mamuang: steamed glutinous rice infused with sweetened coconut milk, served with sweet mango and topped with salted coconut cream and crunchy yellow mung beans. Best in April and May.", "order": "Look for a cart with a pile of yellow 'nam dok mai' mangoes."},
+  {"cat": "Sweets", "region": "Sticky rice & fruit", "name": "Khao Niew Durian", "th": "ข้าวเหนียวทุเรียน", "desc": "Warm glutinous rice topped with tender ripe durian chunks drenched in a rich, sweet-and-salty coconut syrup."},
+  {"cat": "Sweets", "region": "Sticky rice & fruit", "name": "Khao Tom Mad", "th": "ข้าวต้มมัด", "desc": "Sweet sticky rice mixed with coconut milk, stuffed with banana or taro, wrapped in banana leaves and steamed."},
+  {"cat": "Sweets", "region": "Griddle & pancakes", "name": "Khanom Krok", "th": "ขนมครก", "desc": "Small, round coconut puddings cooked in a dimpled cast-iron pan. Crispy outer shell, soft creamy coconut center, often topped with scallions, sweet corn or taro."},
+  {"cat": "Sweets", "region": "Griddle & pancakes", "name": "Khanom Buang (Thai Crepes)", "th": "ขนมเบื้อง", "desc": "Thin, crispy folded crepes smeared with sweet meringue cream and topped with shredded coconut or foi thong."},
+  {"cat": "Sweets", "region": "Griddle & pancakes", "name": "Roti Sai Mai", "th": "โรตีสายไหม", "desc": "Ayutthaya-style cotton candy rolls. Soft, pandan-flavored paper-thin crepes wrapped around spun palm sugar threads."},
+  {"cat": "Sweets", "region": "Shaved ice & cold", "name": "Tub Tim Krob", "th": "ทับทิมกรอบ", "desc": "\"Red Rubies\": crunchy water chestnut cubes coated in pink tapioca flour, served over crushed ice in sweetened coconut milk."},
+  {"cat": "Sweets", "region": "Shaved ice & cold", "name": "Lod Chong", "th": "ลอดช่อง", "desc": "Pandan-infused green rice-flour noodles in cold, fragrant coconut milk sweetened with dark palm sugar (nam tan tanod)."},
+  {"cat": "Sweets", "region": "Shaved ice & cold", "name": "Ruam Mit", "th": "รวมมิตร", "desc": "A customizable bowl of mixed jellies, tapioca pearls, corn, jackfruit and sweet potato over shaved ice and coconut milk. Ideal in hot weather."},
+  {"cat": "Sweets", "region": "Egg-yolk sweets", "name": "Thong Yip", "th": "ทองหยิบ", "desc": "Egg yolk drops cooked in heavy sugar syrup and pinched into 5-pointed flower shapes. The Thong series was introduced to the Ayutthaya court in the 17th century by Maria Guyomar de Pinha, who brought Portuguese techniques. The golden color symbolizes wealth and good fortune."},
+  {"cat": "Sweets", "region": "Egg-yolk sweets", "name": "Thong Yod", "th": "ทองหยอด", "desc": "Tear-drop-shaped golden egg yolk balls boiled in sugar syrup."},
+  {"cat": "Sweets", "region": "Egg-yolk sweets", "name": "Foi Thong", "th": "ฝอยทอง", "desc": "Golden threads of fine egg yolk dripped into boiling syrup, creating sweet silk-like nests."},
+  {"cat": "Sweets", "region": "Egg-yolk sweets", "name": "Med Khanun", "th": "เม็ดขนุน", "desc": "Mashed mung bean paste coated in egg yolk and cooked in syrup, shaped like jackfruit seeds."},
+  {"cat": "Sweets", "region": "Steamed coconut cakes", "name": "Khanom Chan", "th": "ขนมชั้น", "desc": "Multi-layered steamed cake made from tapioca and rice flour, flavored with pandan leaf juice and coconut milk. Soft, chewy and peelable layer by layer."},
+  {"cat": "Sweets", "region": "Steamed coconut cakes", "name": "Khanom Piak Poon", "th": "ขนมเปียกปูน", "desc": "Dark, chewy pudding colored naturally with burnt coconut husk ash or pandan leaves, topped with freshly grated salted coconut."},
+  {"cat": "Sweets", "region": "Steamed coconut cakes", "name": "Tako", "th": "ตะโก้", "desc": "Two-layered pudding served in banana leaf cups. The bottom is flavored tapioca flour (with corn, water chestnuts or taro), topped with a thick, salted coconut cream layer."}
 ];
 const SPICE = [
   {label: "None", th: "ไม่เผ็ด", rom: "mâi phèt", en: "Not spicy"},
