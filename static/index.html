@@ -375,7 +375,7 @@ html,*{scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--accent) 55%,
       <div><label for="days">Days</label><div class="stepper"><button type="button" data-step="-1" aria-label="Fewer days">&minus;</button><input id="days" type="number" min="1" max="30" value="5"><button type="button" data-step="1" aria-label="More days">+</button></div></div>
       <div><label id="budLbl">Budget</label><div class="budseg" id="budSeg" role="group" aria-labelledby="budLbl"><button type="button" data-b="Low">Low</button><button type="button" data-b="Medium" class="on">Medium</button><button type="button" data-b="High">High</button></div>
         <select id="budget" hidden><option>Low</option><option selected>Medium</option><option>High</option></select></div>
-      <div class="full"><label for="region">Where do you want to go?</label><input id="region" value="Bangkok and Chiang Mai" placeholder="e.g. Bangkok, Chiang Mai, the islands"></div>
+      <div class="full"><label for="region">Where do you want to go?</label><input id="region" value="Bangkok, Chiang Mai" placeholder="e.g. Bangkok, Chiang Mai, the islands"><div class="ichips" id="rChips" aria-label="Pick places"></div></div>
       <div class="full"><label for="interests">Interests</label><input id="interests" value="food, temples, nature" placeholder="e.g. food, temples, nature"><div class="ichips" id="iChips" aria-label="Pick interests"></div></div>
     </div>
     <button class="go" id="planBtn" type="button"><span>Create plan</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></button>
@@ -765,23 +765,29 @@ async function callApi(url, body, out, btn) {
   return r.data.answer;
 }
 
-// plan page: budget buttons and interest chips
+// plan page: tappable chips that add or remove words in a text box, plus budget buttons
 const INTERESTS = ["Food", "Temples", "Nature", "Beaches", "Nightlife", "Markets", "Hidden gems", "Culture", "Shopping", "Adventure"];
-const interestList = () => $("interests").value.split(",").map(t => t.trim()).filter(Boolean);
-function syncInterests() {
-  const cur = interestList().map(t => t.toLowerCase());
-  document.querySelectorAll("#iChips button").forEach(b => b.classList.toggle("on", cur.includes(b.textContent.toLowerCase())));
-}
-INTERESTS.forEach(t => {
-  const b = document.createElement("button"); b.type = "button"; b.textContent = t;
-  b.onclick = () => {
-    const cur = interestList(), i = cur.findIndex(x => x.toLowerCase() === t.toLowerCase());
-    if (i >= 0) cur.splice(i, 1); else cur.push(t.toLowerCase());
-    $("interests").value = cur.join(", "); syncInterests();
+const PLACES = ["Bangkok", "Chiang Mai", "Chiang Rai", "Pai", "Nan", "Sukhothai", "Ayutthaya", "Kanchanaburi", "Hua Hin", "Pattaya", "Phuket", "Krabi", "Trang", "Koh Samui", "Koh Tao", "Koh Lanta", "Koh Surin"];
+function chipBox(inputId, chipsId, options, lower) {
+  const input = $(inputId), box = $(chipsId);
+  const list = () => input.value.split(",").map(t => t.trim()).filter(Boolean);
+  const sync = () => {
+    const cur = list().map(t => t.toLowerCase());
+    box.querySelectorAll("button").forEach(b => b.classList.toggle("on", cur.includes(b.textContent.toLowerCase())));
   };
-  $("iChips").appendChild(b);
-});
-$("interests").addEventListener("input", syncInterests); syncInterests();
+  options.forEach(t => {
+    const b = document.createElement("button"); b.type = "button"; b.textContent = t;
+    b.onclick = () => {
+      const cur = list(), i = cur.findIndex(x => x.toLowerCase() === t.toLowerCase());
+      if (i >= 0) cur.splice(i, 1); else cur.push(lower ? t.toLowerCase() : t);
+      input.value = cur.join(", "); sync();
+    };
+    box.appendChild(b);
+  });
+  input.addEventListener("input", sync); sync();
+}
+chipBox("interests", "iChips", INTERESTS, true);
+chipBox("region", "rChips", PLACES, false);
 document.querySelectorAll("#budSeg button").forEach(b => b.onclick = () => {
   $("budget").value = b.dataset.b;
   document.querySelectorAll("#budSeg button").forEach(x => x.classList.toggle("on", x === b));
