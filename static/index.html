@@ -166,6 +166,11 @@ html,*{scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--accent) 55%,
 .dish h3{margin:8px 0 0;font-size:1.25rem;line-height:1.15}
 .dish .th{font-size:1.1rem;color:var(--muted);margin-bottom:6px}
 .dish p{margin:0 0 8px}
+.heat{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;margin:0 0 8px;font-size:.9rem}
+.heat .dots{display:inline-flex;gap:3px}
+.heat .dots i{width:11px;height:11px;border-radius:50%;border:1.5px solid #E4572E;box-sizing:border-box}
+.heat .dots i.f{background:#E4572E}
+.heat-warn{flex-basis:100%;color:#E4572E;font-size:.85rem;font-weight:600}
 .dish .order{padding:8px 10px;border-left:4px solid var(--accent);border-radius:6px;background:color-mix(in srgb,var(--accent) 12%,transparent);font-size:.95rem}
 @media (max-width:480px){.dock{gap:4px;padding:8px 6px}.dock button{width:44px}}
 [hidden]{display:none!important}
@@ -893,6 +898,17 @@ const DISHES = [
   {"cat": "Sweets", "region": "Steamed coconut cakes", "name": "Khanom Piak Poon", "th": "ขนมเปียกปูน", "desc": "Dark, chewy pudding colored naturally with burnt coconut husk ash or pandan leaves, topped with freshly grated salted coconut."},
   {"cat": "Sweets", "region": "Steamed coconut cakes", "name": "Tako", "th": "ตะโก้", "desc": "Two-layered pudding served in banana leaf cups. The bottom is flavored tapioca flour (with corn, water chestnuts or taro), topped with a thick, salted coconut cream layer."}
 ];
+const HEAT_LABEL = ["Not spicy", "Mild", "Hot", "Very hot"];
+// name -> [spice level 0-3, can you ask for it milder? 1 = yes, 0 = no]
+const HEAT = {
+  "Pad Kra Pao": [2, 1], "Khao Man Gai": [0, 1], "Khao Moo Daeng / Moo Krob": [0, 1], "Pad Kana Moo Krob": [2, 1],
+  "Khao Kha Moo": [1, 1], "Pad Prik Gaeng": [2, 0],
+  "Boat Noodles": [1, 1], "Yen Ta Fo": [0, 1], "Kuaitiao Tom Yum": [2, 1], "Pad See Ew": [0, 1], "Rad Na": [0, 1],
+  "Som Tam": [3, 1], "Larb & Nam Tok": [3, 1], "Gai Yang": [1, 1], "Tom Saep": [3, 0], "Kor Moo Yang": [1, 1],
+  "Khao Soi": [1, 1], "Khanom Chin Nam Ngiao": [2, 1], "Sai Oua": [2, 0],
+  "Khua Kling": [3, 0], "Gaeng Som": [3, 0], "Gaeng Tai Pla": [3, 0],
+  "Pla Neung Manao": [2, 1], "Pla Tod Nam Pla": [0, 1], "Tom Kha Gai": [1, 1], "Gaeng Keow Wan": [2, 0], "Nam Prik Kapi": [3, 0]
+};
 const SPICE = [
   {label: "None", th: "ไม่เผ็ด", rom: "mâi phèt", en: "Not spicy"},
   {label: "Mild", th: "เผ็ดน้อย", rom: "phèt nói", en: "A little spicy"},
@@ -945,6 +961,21 @@ function renderFood() {
     row.append(left, pl);
     const p = document.createElement("p"); p.textContent = d.desc;
     card.append(tag, row, p);
+    const hv = HEAT[d.name];
+    if (hv) {       // sweets have no entry, so they show no spice badge
+      const [lv, adj] = hv, heat = document.createElement("div"); heat.className = "heat";
+      const dots = document.createElement("span"); dots.className = "dots"; dots.setAttribute("aria-hidden", "true");
+      for (let k = 1; k <= 3; k++) { const i = document.createElement("i"); if (k <= lv) i.className = "f"; dots.appendChild(i); }
+      const lab = document.createElement("span");
+      lab.textContent = HEAT_LABEL[lv] + (lv === 0 ? "" : adj ? " · you can ask for it milder" : " · usually can't be made milder");
+      heat.append(dots, lab);
+      if (!adj && lv > spice) {
+        const w = document.createElement("div"); w.className = "heat-warn";
+        w.textContent = "Hotter than your spice setting, and the spice is part of the dish.";
+        heat.append(w);
+      }
+      card.append(heat);
+    }
     if (d.order) {
       const o = document.createElement("div"); o.className = "order";
       const bo = document.createElement("b"); bo.textContent = "How to order: "; o.append(bo, d.order);
