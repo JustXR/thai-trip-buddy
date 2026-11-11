@@ -168,6 +168,22 @@ html,*{scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--accent) 55%,
 :root[data-theme="light"] .themebtn .moon{display:block}
 :root[data-theme="light"] .themebtn .sun{display:none}
 
+
+/* ----- hidden gems ----- */
+.gem .tag{display:inline-block;padding:2px 10px;border-radius:999px;background:var(--accent);color:var(--on-accent);font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.gem h3{margin:8px 0 0;font-size:1.25rem;line-height:1.15}
+.gem .place{color:var(--muted);font-size:.95rem;margin-bottom:6px}
+.gem p{margin:0 0 8px}
+.gem .hours{display:flex;align-items:flex-start;gap:8px;padding:8px 10px;border-left:4px solid var(--accent);border-radius:6px;background:color-mix(in srgb,var(--accent) 12%,transparent);font-size:.95rem}
+.gem .hours svg{flex:none;width:18px;height:18px;margin-top:2px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.gem .map{display:inline-block;margin-top:10px;padding:6px 14px;border:1px solid var(--line);border-radius:999px;color:var(--text);text-decoration:none;font-size:.9rem;transition:background .15s,color .15s}
+.gem .map:hover,.gem .map:focus-visible{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+@media (max-width:480px){.dock{gap:3px;padding:8px 6px}.dock button{width:40px}.dock .lbl{font-size:.56rem}}
+@media (max-width:360px){.dock button{width:36px}}
+
+/* ----- trip: expenses live under the trip code ----- */
+.sect{margin:22px 0 10px}
+
 /* ----- local food ----- */
 .food-pic{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;object-position:center 40%;border-radius:14px;margin:0 0 12px;border:1px solid var(--line)}
 .spice-say{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;padding:10px 12px;border-radius:12px;background:color-mix(in srgb,var(--accent) 18%,transparent)}
@@ -184,7 +200,6 @@ html,*{scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--accent) 55%,
 .heat .dots i.f{background:var(--heat)}
 .heat-warn{flex-basis:100%;color:var(--heat);font-size:.85rem;font-weight:600}
 .dish .order{padding:8px 10px;border-left:4px solid var(--accent);border-radius:6px;background:color-mix(in srgb,var(--accent) 12%,transparent);font-size:.95rem}
-@media (max-width:480px){.dock{gap:4px;padding:8px 6px}.dock button{width:44px}}
 [hidden]{display:none!important}
 </style>
 </head>
@@ -228,6 +243,21 @@ html,*{scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--accent) 55%,
       <p class="note">Anyone with this code can view and edit the trip, so don't put private information in it.</p>
     </div>
   </div>
+  <div id="moneyIn" hidden>
+    <h2 class="big sect">Shared expenses</h2>
+    <div class="card"><b>Add expense</b> <span class="note">(split equally, THB)</span>
+      <label>Description</label><input id="desc" placeholder="Dinner" maxlength="60">
+      <label>Amount (THB)</label><input id="amt" type="number" min="0" step="0.01">
+      <label>Paid by</label><select id="payer"></select>
+      <button class="go" id="addBtn">Add expense</button>
+    </div>
+    <div class="card"><b>Expenses</b><div id="list"></div></div>
+    <div class="card"><b>Who owes whom</b><div id="settle"></div></div>
+    <div class="card"><b>Travelers</b>
+      <input id="editPeople" aria-label="Travelers">
+      <button class="go ghost" id="savePeople">Save travelers</button>
+    </div>
+  </div>
 </section>
 
 <section id="plan" class="card" hidden>
@@ -261,6 +291,15 @@ html,*{scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--accent) 55%,
   <div id="fList"></div>
 </section>
 
+<section id="gems" hidden>
+  <div class="card">
+    <h2 class="big">Hidden gems</h2>
+    <p style="margin:0"><b>Go where the locals go.</b> Quiet islands, mountain temples and Bangkok corners that most visitors miss, with opening hours.</p>
+  </div>
+  <div class="chips" id="gChips"></div>
+  <div id="gList"></div>
+</section>
+
 <section id="phrases" hidden>
   <div class="card">
     <h2 class="big">Speak a little Thai.</h2>
@@ -276,32 +315,15 @@ html,*{scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--accent) 55%,
   <div id="pList"></div>
 </section>
 
-<section id="money" hidden>
-  <div id="moneyNone" class="card">Create or join a trip first (Trip tab) to share expenses with your companions.</div>
-  <div id="moneyIn" hidden>
-    <div class="card"><b>Add expense</b> <span class="note">(split equally, THB)</span>
-      <label>Description</label><input id="desc" placeholder="Dinner" maxlength="60">
-      <label>Amount (THB)</label><input id="amt" type="number" min="0" step="0.01">
-      <label>Paid by</label><select id="payer"></select>
-      <button class="go" id="addBtn">Add expense</button>
-    </div>
-    <div class="card"><b>Expenses</b><div id="list"></div></div>
-    <div class="card"><b>Who owes whom</b><div id="settle"></div></div>
-    <div class="card"><b>Travelers</b>
-      <input id="editPeople" aria-label="Travelers">
-      <button class="go ghost" id="savePeople">Save travelers</button>
-    </div>
-  </div>
-</section>
 </main>
 <nav class="dock" aria-label="Main">
   <button data-t="home" class="on" data-label="Home" aria-label="Home"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg><span class="lbl">Home</span></button>
-  <button data-t="trip" data-label="Trip" aria-label="Trip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span class="lbl">Trip</span></button>
+  <button data-t="trip" data-label="Trip &amp; expenses" aria-label="Trip and expenses"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span class="lbl">Trip</span></button>
   <button data-t="plan" data-label="Plan" aria-label="Plan"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span class="lbl">Plan</span></button>
   <button data-t="ask" data-label="Ask a local" aria-label="Ask a local"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg><span class="lbl">Ask</span></button>
   <button data-t="food" data-label="Local food" aria-label="Local food"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg><span class="lbl">Food</span></button>
+  <button data-t="gems" data-label="Hidden gems" aria-label="Hidden gems"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12l4 6-10 13L2 9Z"/><path d="M11 3 8 9l4 13 4-13-3-6"/><path d="M2 9h20"/></svg><span class="lbl">Gems</span></button>
   <button data-t="phrases" data-label="Thai phrases" aria-label="Thai phrases"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg><span class="lbl">Thai</span></button>
-  <button data-t="money" data-label="Expenses" aria-label="Expenses"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg><span class="lbl">Expenses</span></button>
 </nav>
 
 <script>
@@ -348,7 +370,7 @@ function show(t) {
   document.querySelectorAll(".dock button").forEach(x => x.classList.toggle("on", x.dataset.t === t));
   const isHome = t === "home";
   $("home").hidden = !isHome; $("app").hidden = isHome;
-  ["trip", "plan", "ask", "food", "phrases", "money"].forEach(s => $(s).hidden = s !== t);
+  ["trip", "plan", "ask", "food", "gems", "phrases"].forEach(s => $(s).hidden = s !== t);
   scrollTo({top: 0});
 }
 function go(t) {
@@ -661,7 +683,7 @@ function renderPlan() {
   }
 }
 function renderMoney() {
-  $("moneyNone").hidden = !!trip; $("moneyIn").hidden = !trip;
+  $("moneyIn").hidden = !trip;
   if (!trip) return;
   const ps = trip.people, key = ps.join("|");
   if ($("payer").dataset.key !== key) {
@@ -878,6 +900,53 @@ document.querySelectorAll(".stepper button").forEach(b => b.onclick = () => {
   i.dispatchEvent(new Event("input", {bubbles: true}));
 });
 
+// ----- hidden gems -----
+const GEMS = [
+  {"cat": "The North", "place": "Nan Province", "name": "Wat Phumin", "desc": "A centuries-old temple famed for its striking cruciform architecture and the iconic \"Whispering Love\" (Pu Marn Ya Marn) mural depicting traditional local life.", "hours": "Daily 6:00 AM – 6:00 PM"},
+  {"cat": "The North", "place": "Sangkhlaburi", "name": "Mon Bridge", "desc": "Thailand's longest hand-built wooden bridge, crossing the Songalia River. At sunrise it offers misty mountain backdrops and a glimpse into local Mon traditions.", "hours": "Open 24 hours (best at dawn)"},
+  {"cat": "The North", "place": "Phetchabun", "name": "Wat Phra That Pha Sorn Kaew", "desc": "A surreal mountaintop temple complex adorned with millions of colorful mosaic tiles and pottery pieces, overlooking rolling seas of morning fog.", "hours": "Daily 8:00 AM – 5:00 PM (until 6:00 PM on Saturdays and Sundays)"},
+  {"cat": "Quiet islands", "place": "Near the Cambodian border", "name": "Koh Kood", "desc": "An untouched island sanctuary with pristine jungle waterfalls, stilted fishing villages and quiet white-sand beaches, free from mass tourism.", "hours": "Open 24 hours (reached by daytime speedboats and ferries)"},
+  {"cat": "Quiet islands", "place": "Trang Province", "name": "Ko Kradan", "desc": "A stunning, car-free island with world-class coral reefs and powdery white shores, reached directly from the water.", "hours": "Open 24 hours (best in the dry season, November to April)"},
+  {"cat": "Quiet islands", "place": "Phang Nga Bay", "name": "Ko Yao Noi", "desc": "Tucked quietly between Phuket and Krabi, with dramatic limestone karst views and a genuine look at traditional island life.", "hours": "Open 24 hours (daily longtail boats or speedboats)"},
+  {"cat": "Quiet islands", "place": "Satun Province", "name": "Ko Lipe", "desc": "A southern Andaman paradise in Tarutao National Marine Park, known for crystal-turquoise water, vibrant marine life and the lively pedestrian Walking Street.", "hours": "Open 24 hours"},
+  {"cat": "Quiet islands", "place": "Surat Thani Province", "name": "Ko Tao", "desc": "Globally renowned as a premier hub for scuba diving, with rugged granite hills and scenic viewpoints like John-Suwan.", "hours": "Open 24 hours"},
+  {"cat": "Bangkok", "place": "Chao Phraya riverside", "name": "Talat Noi", "desc": "A historic riverside neighborhood filled with 19th-century courtyard houses, hidden street art, antique workshops and indie cafés.", "hours": "Accessible all day; cafés and shops usually open about 9:00 AM – 6:00 PM"},
+  {"cat": "Bangkok", "place": "Phra Pradaeng", "name": "Bang Kachao", "desc": "Bangkok's \"Green Lung\": a protected loop of jungle and fruit orchards with a maze of elevated concrete cycling paths, away from city traffic.", "hours": "Daily, dawn to dusk (ideal for daytime biking)"},
+  {"cat": "Bangkok", "place": "Opposite Chatuchak Market", "name": "Tuek Daeng Chatuchak (The Red Building)", "desc": "A multi-story indoor building packed with retro clothing, vintage band tees, antique furniture and vinyl records.", "hours": "Usually daily about 10:00 AM – 8:00 PM (liveliest on weekends)"},
+  {"cat": "Bangkok", "place": "Chinatown", "name": "Sampheng Market (Talat Sampheng)", "desc": "A high-energy wholesale labyrinth with narrow alleyways packed wall-to-wall with textiles, fashion accessories and crafts.", "hours": "Daily about 8:00 AM – 5:00 PM. Early wholesale session about 2:00 AM – 7:00 AM (closed Mondays)"},
+  {"cat": "Bangkok", "place": "Near Chulalongkorn University", "name": "Banthat Thong Road", "desc": "Bangkok's premier modern culinary destination, packed with legendary street food stalls, trendy dessert cafés and bustling hot-pot spots.", "hours": "Daily; most shops and vendors about 3:00–4:00 PM until midnight or 1:00 AM"},
+  {"cat": "The North", "place": "Chiang Rai Province", "name": "Phu Chi Fa", "desc": "A cliff-top viewpoint on the Laos border, famous for its sunrise over a sea of mist. Best in the cool season, roughly November to February.", "hours": "Hours vary, check before you go (sunrise is the highlight)"},
+  {"cat": "The North", "place": "Mae Hong Son Province", "name": "Pai Canyon", "desc": "Narrow ridge paths winding over a red-earth canyon near Pai, popular for sunset views.", "hours": "Open during daylight (best near sunset)"},
+  {"cat": "The North", "place": "Sisaket Province", "name": "Wat Pa Maha Chedi Kaew", "desc": "The \"Temple of a Million Bottles\": halls and buildings made from recycled glass bottles.", "hours": "Hours vary, check before you go"},
+  {"cat": "Quiet islands", "place": "Ranong Province", "name": "Koh Phayam", "desc": "A laid-back Andaman island with no big resorts, quiet beaches and cashew farms. Best from November to April.", "hours": "Open 24 hours (reached by boat from Ranong)"},
+  {"cat": "Bangkok", "place": "Near Talat Noi", "name": "Kudee Chin", "desc": "A small riverside community with the old Santa Cruz Church, a reminder of Bangkok's Portuguese roots. Good to combine with Talat Noi.", "hours": "Hours vary, check before you go"}
+];
+let gCat = "All";
+function renderGems() {
+  const chips = $("gChips"); chips.textContent = "";
+  ["All", ...new Set(GEMS.map(g => g.cat))].forEach(c => {
+    const b = document.createElement("button");
+    b.textContent = c; if (c === gCat) b.className = "on";
+    b.onclick = () => { gCat = c; renderGems(); };
+    chips.appendChild(b);
+  });
+  const list = $("gList"); list.textContent = "";
+  GEMS.filter(g => gCat === "All" || g.cat === gCat).forEach(g => {
+    const card = document.createElement("div"); card.className = "card gem";
+    const tag = document.createElement("span"); tag.className = "tag"; tag.textContent = g.cat;
+    const h = document.createElement("h3"); h.textContent = g.name;
+    const pl = document.createElement("div"); pl.className = "place"; pl.textContent = g.place;
+    const p = document.createElement("p"); p.textContent = g.desc;
+    const hr = document.createElement("div"); hr.className = "hours";
+    hr.insertAdjacentHTML("afterbegin", '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>');
+    const ht = document.createElement("span"); ht.textContent = g.hours; hr.append(ht);
+    const a = document.createElement("a"); a.className = "map"; a.textContent = "Open in Maps";
+    a.href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(g.name + ", " + g.place + ", Thailand");
+    a.target = "_blank"; a.rel = "noopener noreferrer";
+    card.append(tag, h, pl, p, hr, a); list.appendChild(card);
+  });
+}
+
 // ----- local food -----
 const DISHES = [
   {"cat": "Everyday plates", "region": "Everywhere", "name": "Pad Kra Pao", "th": "ผัดกะเพรา", "desc": "Holy basil stir-fry over rice — the dish Thais actually eat for lunch. Minced pork (moo), chicken (gai) or beef (neua) with holy basil, garlic and fresh chilies.", "order": "Add 'kai dao' for a crispy fried egg on top."},
@@ -1054,6 +1123,7 @@ if (startCode) joinTrip(startCode, true);
 renderAll();
 renderPhrases();
 renderFood();
+renderGems();
 initDock();
 startBeams();
 startDotField();
