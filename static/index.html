@@ -135,6 +135,17 @@ body .md strong{font-weight:700;background:none}
 @media (max-height:640px){.df-hint{display:none}}
 @media (prefers-reduced-motion:reduce){.df-hint .mouse span{animation:none}.df-top,.df-bottom>*{transition:none}}
 
+
+/* ----- number inputs: our own - / + buttons instead of the browser arrows ----- */
+input[type=number]{-moz-appearance:textfield;appearance:textfield}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.stepper{display:flex;gap:8px;align-items:stretch}
+.stepper input{flex:1;min-width:0;text-align:center;font-weight:600}
+.stepper button{flex:none;width:44px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--text);font:inherit;font-size:1.3rem;line-height:1;cursor:pointer;transition:background .15s,color .15s,transform .1s}
+.stepper button:hover{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.stepper button:active{transform:scale(.94)}
+.stepper button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
 /* ----- local food ----- */
 .food-pic{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;object-position:center 40%;border-radius:14px;margin:0 0 12px;border:1px solid var(--line)}
 .spice-say{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;padding:10px 12px;border-radius:12px;background:color-mix(in srgb,var(--accent) 18%,transparent)}
@@ -192,7 +203,7 @@ body .md strong{font-weight:700;background:none}
 </section>
 
 <section id="plan" class="card" hidden>
-  <label>Days</label><input id="days" type="number" min="1" max="30" value="5">
+  <label>Days</label><div class="stepper"><button type="button" data-step="-1" aria-label="Fewer days">&minus;</button><input id="days" type="number" min="1" max="30" value="5"><button type="button" data-step="1" aria-label="More days">+</button></div>
   <label>Region</label><input id="region" value="Bangkok and Chiang Mai">
   <label>Budget</label>
   <select id="budget"><option>Low</option><option selected>Medium</option><option>High</option></select>
@@ -817,6 +828,13 @@ document.querySelectorAll("#seg button").forEach(b => b.onclick = () => {
   renderPhrases(); renderFood();
 });
 
+
+
+document.querySelectorAll(".stepper button").forEach(b => b.onclick = () => {
+  const i = b.parentElement.querySelector("input");
+  b.dataset.step === "1" ? i.stepUp() : i.stepDown();
+  i.dispatchEvent(new Event("input", {bubbles: true}));
+});
 
 // ----- local food -----
 const DISHES = [
