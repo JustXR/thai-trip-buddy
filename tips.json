@@ -1,7 +1,62 @@
 [
-  {"category": "etiquette", "tip": "EXAMPLE: Don't touch people's heads and don't point your feet at people or Buddha images."},
-  {"category": "etiquette", "tip": "EXAMPLE: Cover shoulders and knees when visiting temples."},
-  {"category": "transport", "tip": "EXAMPLE: Use Grab or insist on the meter in Bangkok taxis."},
-  {"category": "food", "tip": "EXAMPLE: Busy street stalls with lots of locals are usually the best and safest choice."},
-  {"category": "money", "tip": "EXAMPLE: Replace these with YOUR real local prices and advice."}
+ {
+  "category": "etiquette",
+  "tip": "EXAMPLE: Don't touch people's heads and don't point your feet at people or Buddha images."
+ },
+ {
+  "category": "etiquette",
+  "tip": "EXAMPLE: Cover shoulders and knees when visiting temples."
+ },
+ {
+  "category": "transport",
+  "tip": "EXAMPLE: Use Grab or insist on the meter in Bangkok taxis."
+ },
+ {
+  "category": "food",
+  "tip": "EXAMPLE: Busy street stalls with lots of locals are usually the best and safest choice."
+ },
+ {
+  "category": "money",
+  "tip": "EXAMPLE: Replace these with YOUR real local prices and advice."
+ },
+ {
+  "category": "transport",
+  "tip": "Khlong Saen Saep canal boat (Golden Mount line) is a fast, cheap way to cross Bangkok and avoid traffic. The route has two sections that meet at Pratu Nam Pier (ประตูน้ำ), the central interchange where you must get off and change boats if you travel the whole way."
+ },
+ {
+  "category": "transport",
+  "tip": "Khlong Saen Saep WEST line, Phanfa Lilat to Pratu Nam: Phanfa Lilat (ผ่านฟ้าลีลาศ) near the Golden Mount (Wat Saket) and Ratchadamnoen Avenue; Bobae Market (ตลาดโบ๊เบ๊) a huge wholesale clothing market; Sapan Charoen Phon (สะพานเจริญผล); Sapan Hua Chang (สะพานหัวช้าง) near Phaya Thai / National Stadium, close to MBK Center and Bangkok Art and Culture Centre; Pratu Nam (ประตูน้ำ) in the shopping district (Platinum Fashion Mall, Central World). This line runs through the old town near Khao San Road and Democracy Monument."
+ },
+ {
+  "category": "transport",
+  "tip": "Khlong Saen Saep EAST line, Pratu Nam to Wat Si Bun Rueang: Chidlom / Saet Saep (ชิดลม) near Central Chidlom and Ploenchit; Saphan Witthayu (สะพานวิทยุ) at Wireless Road / British Embassy; Nana Nuea (นานาเหนือ) at Sukhumvit Soi 3; Nana Chat (นานาชาติ); Asoke (อโศก) which connects to MRT Phetchaburi and the Airport Rail Link (Makkasan); SWU Prasannamit (มศว.ประสานมิตร); Italthai (อิตัลไทย); Wat Mai Chong Lom (วัดใหม่ช่องลม); Ban Don Mosque (สุเหร่าบ้านดอน); Thong Lo Soi (ซอยทองหล่อ) for Thonglor nightlife and dining (Sukhumvit Soi 55); Charn Issara (ชาญอิสระ); Vitthaya School (รร.วิจิตร); Khlong Tan / Ramkhamhaeng 1 (สะพานคลองตัน / ราม 1); The Mall 3 (เดอะมอลล์ 3); Ramkhamhaeng 29 (รามคำแหง 29); Wat Thepleela (วัดเทพลีลา); Ramkhamhaeng University (ม.รามคำแหง); Mitramontarat Bridge (สะพานมิตรมหาดไทย); Wat Klang (วัดกลาง); The Mall Bang Kapi (เดอะมอลล์บางกะปิ) a major mall and interchange near Lat Phrao; Bang Kapi (บางกะปิ) market area; and the last stop Wat Si Bun Rueang (วัดศิริบุญเรือง / วัดศรีบุญเรือง)."
+ },
+ {
+  "category": "transport",
+  "tip": "Khlong Saen Saep boats run roughly 05:30 to 20:30 every day, with shorter hours and fewer boats on weekends and holidays."
+ },
+ {
+  "category": "money",
+  "tip": "Khlong Saen Saep boat fares are about 16 to 30 THB per trip, depending on how far you travel. It is much cheaper than a taxi or Grab and not affected by traffic."
+ },
+ {
+  "category": "transport",
+  "tip": "Khlong Saen Saep safety: spray from the canal can splash on deck, so pull the plastic curtain up when needed. The boat stops only for a moment at each pier, so move quickly when getting on and off and hold on. Life jackets are under the roof or seats."
+ },
+ {
+  "category": "transport",
+  "tip": "Alternative boat in Bangkok: the Chao Phraya Express Boat runs along the main river. Orange-flag boats are the cheap local boats that stop at most piers, other colours (yellow, green) are faster and stop at fewer piers, and the blue-flag tourist boat has an all-day ticket. It is a good way to reach the Grand Palace (Tha Chang), Wat Pho (Tha Tien) and Khao San Road (Phra Arthit). Many start near BTS Saphan Taksin (Sathorn / Central Pier). Check current fares and timetables at the pier."
+ },
+ {
+  "category": "transport",
+  "tip": "Alternative boat in Bangkok: small cross-river ferries connect piers on both sides of the Chao Phraya River for just a few baht, for example Tha Tien to Wat Arun. They are the easiest way to reach Wat Arun."
+ },
+ {
+  "category": "transport",
+  "tip": "Alternative boat in Bangkok: private longtail boats take tourists through the quiet canals of the Thonburi side. Agree on the price and the time before you get on, and expect to pay much more than public boats."
+ },
+ {
+  "category": "transport",
+  "tip": "How to combine boats with other transport in Bangkok: the Saen Saep boat at Asoke connects to MRT and the Airport Rail Link, and at Pratu Nam you are in the shopping district. The Chao Phraya boat connects to BTS at Saphan Taksin. Boats avoid traffic jams but run less often and stop earlier in the evening than BTS and MRT."
+ }
 ]
