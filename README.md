@@ -1,6 +1,6 @@
-# Thailand Trip Guide
+# Sawasdee Guide
 
-AI-powered Thailand trip guide with local tips and an expense splitter.
+AI-powered Thailand trip guide with tips from a Thai local, shared trips and an expense splitter.
 Built with Flask, AWS Bedrock and plain HTML/JS, hosted on AWS EC2 with Nginx.
 
 ## Features
