@@ -321,7 +321,8 @@ html,*{scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--accent) 55%,
   <div id="tripNone">
     <div class="card"><b>Start a new trip</b>
       <label>Trip name</label><input id="tName" value="Thailand trip" maxlength="60">
-      <label>Travelers (comma separated)</label><input id="tPeople" value="Me, Friend 1, Friend 2">
+      <label for="tPeople">Who is travelling?</label><input id="tPeople" placeholder="e.g. Ploy, Tom, Anna" autocomplete="off">
+      <p class="note">Write the names of everyone on the trip, yourself included, separated by commas. You can change the names later.</p>
       <button class="go" id="createBtn">Create trip</button>
     </div>
     <div class="card"><b>Join with a code</b>
@@ -358,7 +359,7 @@ html,*{scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--accent) 55%,
       <div id="balances"></div>
     </div>
     <div class="card"><b>Travelers</b>
-      <input id="editPeople" aria-label="Travelers">
+      <input id="editPeople" aria-label="Travelers" placeholder="Names separated by commas">
       <button class="go ghost" id="savePeople">Save travelers</button>
     </div>
   </div>
@@ -648,6 +649,7 @@ function leaveTrip() {
 }
 async function createTrip() {
   const people = $("tPeople").value.split(",").map(s => s.trim()).filter(Boolean);
+  if (!people.length) return banner("Add at least one name, for example your own. Separate several names with commas.", true);
   const r = await api("POST", "/api/trips", {name: $("tName").value, people});
   if (!r.ok) return banner(r.data.error || "Could not create the trip.", true);
   setTrip(r.data); banner("Trip created. Share the code with your companions!");
