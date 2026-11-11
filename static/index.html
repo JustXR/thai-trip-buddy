@@ -134,6 +134,19 @@ body .md strong{font-weight:700;background:none}
 @keyframes dfwheel{0%{transform:translateY(0);opacity:0}20%{opacity:1}70%{transform:translateY(10px);opacity:0}100%{opacity:0}}
 @media (max-height:640px){.df-hint{display:none}}
 @media (prefers-reduced-motion:reduce){.df-hint .mouse span{animation:none}.df-top,.df-bottom>*{transition:none}}
+
+/* ----- local food ----- */
+.food-pic{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;object-position:center 40%;border-radius:14px;margin:0 0 12px;border:1px solid var(--line)}
+.spice-say{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;padding:10px 12px;border-radius:12px;background:color-mix(in srgb,var(--accent) 18%,transparent)}
+.spice-say .th{font-size:1.3rem;font-weight:600}
+.spice-say .rom{color:var(--muted);font-size:.9rem}
+.dish .tag{display:inline-block;padding:2px 10px;border-radius:999px;background:var(--accent);color:var(--on-accent);font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.dish .row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.dish h3{margin:8px 0 0;font-size:1.25rem;line-height:1.15}
+.dish .th{font-size:1.1rem;color:var(--muted);margin-bottom:6px}
+.dish p{margin:0 0 8px}
+.dish .order{padding:8px 10px;border-left:4px solid var(--accent);border-radius:6px;background:color-mix(in srgb,var(--accent) 12%,transparent);font-size:.95rem}
+@media (max-width:480px){.dock{gap:4px;padding:8px 6px}.dock button{width:44px}}
 [hidden]{display:none!important}
 </style>
 </head>
@@ -196,6 +209,18 @@ body .md strong{font-weight:700;background:none}
   <div class="out" id="askOut"></div>
 </section>
 
+<section id="food" hidden>
+  <img class="food-pic" src="food.jpg" alt="A night-market street food stall in Thailand with a cook frying noodles in a wok" width="1280" height="960" decoding="async">
+  <div class="card">
+    <h2 class="big">Local food &amp; street eats</h2>
+    <p style="margin:0"><b>Eat like you live here.</b> Our favourite dishes, the region they come from, and the words to order them with confidence.</p>
+    <label>Spice</label>
+    <div class="seg" id="spiceSeg"></div>
+    <div class="spice-say" id="spiceSay"></div>
+  </div>
+  <div id="fList"></div>
+</section>
+
 <section id="phrases" hidden>
   <div class="card">
     <h2 class="big">Speak a little Thai.</h2>
@@ -234,6 +259,7 @@ body .md strong{font-weight:700;background:none}
   <button data-t="trip" data-label="Trip" aria-label="Trip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span class="lbl">Trip</span></button>
   <button data-t="plan" data-label="Plan" aria-label="Plan"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span class="lbl">Plan</span></button>
   <button data-t="ask" data-label="Ask a local" aria-label="Ask a local"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg><span class="lbl">Ask</span></button>
+  <button data-t="food" data-label="Local food" aria-label="Local food"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg><span class="lbl">Food</span></button>
   <button data-t="phrases" data-label="Thai phrases" aria-label="Thai phrases"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg><span class="lbl">Thai</span></button>
   <button data-t="money" data-label="Expenses" aria-label="Expenses"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg><span class="lbl">Expenses</span></button>
 </nav>
@@ -268,7 +294,7 @@ function show(t) {
   document.querySelectorAll(".dock button").forEach(x => x.classList.toggle("on", x.dataset.t === t));
   const isHome = t === "home";
   $("home").hidden = !isHome; $("app").hidden = isHome;
-  ["trip", "plan", "ask", "phrases", "money"].forEach(s => $(s).hidden = s !== t);
+  ["trip", "plan", "ask", "food", "phrases", "money"].forEach(s => $(s).hidden = s !== t);
   scrollTo({top: 0});
 }
 function go(t) {
@@ -788,8 +814,68 @@ function renderPhrases() {
 document.querySelectorAll("#seg button").forEach(b => b.onclick = () => {
   polite = b.dataset.p;
   try { localStorage.setItem("polite", polite); } catch (e) {}
-  renderPhrases();
+  renderPhrases(); renderFood();
 });
+
+
+// ----- local food -----
+const DISHES = [
+  {region: "North", name: "Khao Soi", th: "ข้าวซอย", desc: "Curry noodle soup with crispy egg noodles on top, pickled mustard greens and lime.", order: "Ask for 'khao soi gai' (chicken) — the classic."},
+  {region: "Isan", name: "Som Tam", th: "ส้มตำ", desc: "Pounded green papaya salad: sour, salty, sweet and fiery all at once.", order: "Say 'som tam Thai, phet noi' for the sweeter, milder version."},
+  {region: "Everywhere", name: "Pad Kra Pao", th: "ผัดกะเพรา", desc: "Holy basil stir-fry over rice — the dish Thais actually eat for lunch.", order: "Add 'kai dao' for a crispy fried egg on top."},
+  {region: "Central", name: "Boat Noodles", th: "ก๋วยเตี๋ยวเรือ", desc: "Tiny, rich bowls of noodle soup. Locals stack up five or six empty bowls.", order: "Point at a noodle type, then 'nam tok' for the rich broth."},
+  {region: "South", name: "Gaeng Tai Pla", th: "แกงไตปลา", desc: "A deep, funky southern curry. Bold, aromatic, unforgettable.", order: "Eat it with rice and the free plate of fresh vegetables."},
+  {region: "Everywhere", name: "Mango Sticky Rice", th: "ข้าวเหนียวมะม่วง", desc: "Sweet coconut sticky rice with ripe mango. Best in April and May.", order: "Look for a cart with a pile of yellow 'nam dok mai' mangoes."}
+];
+const SPICE = [
+  {label: "None", th: "ไม่เผ็ด", rom: "mâi phèt", en: "Not spicy"},
+  {label: "Mild", th: "เผ็ดน้อย", rom: "phèt nói", en: "A little spicy"},
+  {label: "Hot", th: "เผ็ดๆ", rom: "phèt phèt", en: "Spicy"},
+  {label: "Thai hot", th: "เผ็ดมาก", rom: "phèt mâak", en: "Very spicy, the way Thais eat it"}
+];
+let spice = 0;
+try { spice = Math.min(3, Math.max(0, +localStorage.getItem("spice") || 0)); } catch (e) {}
+function renderFood() {
+  const seg = $("spiceSeg"); seg.textContent = "";
+  SPICE.forEach((sp, i) => {
+    const b = document.createElement("button");
+    b.textContent = sp.label; b.className = i === spice ? "on" : "";
+    b.onclick = () => { spice = i; try { localStorage.setItem("spice", i); } catch (e) {} renderFood(); };
+    seg.appendChild(b);
+  });
+  const sp = SPICE[spice], end = politeEnding(false), say = $("spiceSay"); say.textContent = "";
+  const box = document.createElement("div");
+  const t = document.createElement("div"); t.className = "th"; t.append(sp.th);
+  const r = document.createElement("div"); r.className = "rom"; r.append(sp.rom);
+  if (end) {
+    const a = document.createElement("span"); a.className = "particle"; a.textContent = end.th; t.append(a);
+    const c = document.createElement("span"); c.className = "particle"; c.textContent = end.rom; r.append(c);
+  }
+  const e = document.createElement("div"); e.className = "en"; e.textContent = "Say this when ordering: " + sp.en;
+  box.append(t, r, e);
+  const play = document.createElement("button");
+  play.className = "play"; play.textContent = "▶"; play.setAttribute("aria-label", "Play audio");
+  play.onclick = () => speak(sp.th + (end ? end.th : ""));
+  say.append(box, play);
+  const list = $("fList"); list.textContent = "";
+  DISHES.forEach(d => {
+    const card = document.createElement("div"); card.className = "card dish";
+    const tag = document.createElement("span"); tag.className = "tag"; tag.textContent = d.region;
+    const row = document.createElement("div"); row.className = "row";
+    const left = document.createElement("div");
+    const h = document.createElement("h3"); h.textContent = d.name;
+    const th = document.createElement("div"); th.className = "th"; th.textContent = d.th;
+    left.append(h, th);
+    const pl = document.createElement("button");
+    pl.className = "play"; pl.textContent = "▶"; pl.setAttribute("aria-label", "Hear the Thai name");
+    pl.onclick = () => speak(d.th);
+    row.append(left, pl);
+    const p = document.createElement("p"); p.textContent = d.desc;
+    const o = document.createElement("div"); o.className = "order";
+    const bo = document.createElement("b"); bo.textContent = "How to order: "; o.append(bo, d.order);
+    card.append(tag, row, p, o); list.appendChild(card);
+  });
+}
 
 // ----- dock: icons grow as the mouse gets close -----
 function initDock() {
@@ -833,6 +919,7 @@ const startCode = location.hash.replace("#", "") || store.get();
 if (startCode) joinTrip(startCode, true);
 renderAll();
 renderPhrases();
+renderFood();
 initDock();
 startBeams();
 startDotField();
