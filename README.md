@@ -1,13 +1,20 @@
 # Sawasdee Guide
 
 AI-powered Thailand trip guide with tips from a Thai local, shared trips and an expense splitter.
-Built with Flask, AWS Bedrock and plain HTML/JS, hosted on AWS EC2 with Nginx.
+Built with Flask, AWS Bedrock (Claude Haiku 4.5) and plain HTML/JS, hosted on AWS EC2 with Nginx and gunicorn.
+
+
 
 ## Features
-- AI itinerary planner (Bedrock)
-- "Ask a Thai local" assistant using curated local tips (`tips.json`)
+- AI itinerary planner (Bedrock) that works in local dishes and hidden gems
+- "Ask a Thai local" chat using curated local tips (`tips.json`)
 - Shared trips: create a trip, share the 8-character code, and everyone sees the same plan and expenses (refreshes every few seconds)
-- Expense splitter for travel companions (equal split, THB)
+- Shared expense splitter with a clear "who owes whom" summary (THB)
+- Local food guide: 43 dishes with spice levels, regions and filters
+- Hidden gems: 19 lesser-known places with opening hours
+- Easy Thai phrases with audio
+- Dark and light theme, responsive layout for phone and desktop
+- Rate limit of 20 AI requests per hour per IP
 
 ## Run locally
 ```bash
