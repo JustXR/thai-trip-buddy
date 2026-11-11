@@ -217,6 +217,11 @@ html,*{scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--accent) 55%,
   .chips{flex-wrap:wrap;overflow:visible}
   #fList,#gList,#pList,#moneyIn,#tripNone{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;align-items:start}
   #fList>.card,#gList>.card,#pList>.card,#moneyIn>.card,#tripNone>.card{margin-bottom:0}
+  /* cards in a row share one height; text grows, details stick to the bottom */
+  #fList,#gList,#pList{align-items:stretch}
+  #fList>.card,#gList>.card{display:flex;flex-direction:column}
+  .dish>p,.gem>p{flex:1 1 auto}
+  .gem .map,.dish .tag,.gem .tag{align-self:flex-start}
   #moneyIn{grid-template-columns:repeat(2,minmax(0,1fr))}
   #moneyIn>.sect{grid-column:1/-1;margin:14px 0 0}
   #tripNone{grid-template-columns:repeat(2,minmax(0,1fr))}
