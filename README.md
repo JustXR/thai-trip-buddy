@@ -16,6 +16,9 @@ Built with Flask, AWS Bedrock (Claude Haiku 4.5) and plain HTML/JS, hosted on AW
 - Dark and light theme, responsive layout for phone and desktop
 - Rate limit of 20 AI requests per hour per IP
 
+## Architecture
+![Architecture diagram](docs/architecture.png)
+
 ## Tech stack
 | Layer | Technology |
 |---|---|
