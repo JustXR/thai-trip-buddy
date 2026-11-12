@@ -3,7 +3,7 @@
 AI-powered Thailand trip guide with tips from a Thai local, shared trips and an expense splitter.
 Built with Flask, AWS Bedrock (Claude Haiku 4.5) and plain HTML/JS, hosted on AWS EC2 with Nginx and gunicorn.
 
-**Live app:** http://13.62.70.46
+**Live app:** http://sawasdee-guide.duckdns.org (also reachable at http://13.62.70.46)
 
 ## Features
 - AI itinerary planner (Bedrock) that works in local dishes and hidden gems
