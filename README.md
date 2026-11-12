@@ -3,7 +3,7 @@
 AI-powered Thailand trip guide with tips from a Thai local, shared trips and an expense splitter.
 Built with Flask, AWS Bedrock (Claude Haiku 4.5) and plain HTML/JS, hosted on AWS EC2 with Nginx and gunicorn.
 
-
+**Live app:** http://13.62.70.46
 
 ## Features
 - AI itinerary planner (Bedrock) that works in local dishes and hidden gems
@@ -15,6 +15,20 @@ Built with Flask, AWS Bedrock (Claude Haiku 4.5) and plain HTML/JS, hosted on AW
 - Easy Thai phrases with audio
 - Dark and light theme, responsive layout for phone and desktop
 - Rate limit of 20 AI requests per hour per IP
+
+## Tech stack
+| Layer | Technology |
+|---|---|
+| Front end | Plain HTML, CSS and JavaScript (single page, no build step) |
+| Back end | Python, Flask |
+| AI | AWS Bedrock, Claude Haiku 4.5 (via boto3) |
+| Database | SQLite |
+| Web server | Nginx (reverse proxy) and gunicorn |
+| Hosting | AWS EC2 (Ubuntu), Elastic IP |
+| Security | IAM role (no stored keys), security group, rate limit per IP |
+| Process management | systemd service |
+| Audio | Pre-recorded Thai audio files (generated once with edge-tts) |
+| Version control | Git and GitHub |
 
 ## Run locally
 ```bash
