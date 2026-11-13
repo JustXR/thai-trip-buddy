@@ -11,7 +11,7 @@ Built with Flask, AWS Bedrock (Claude Haiku 4.5) and plain HTML/JS, hosted on AW
 - Shared trips: create a trip, share the 8-character code, and everyone sees the same plan and expenses (refreshes every few seconds)
 - Shared expense splitter with a clear "who owes whom" summary (THB)
 - Local food guide: 43 dishes with spice levels, regions and filters
-- Hidden gems: 19 lesser-known places with opening hours
+- Hidden gems: 20 lesser-known places with opening hours
 - Easy Thai phrases with audio
 - Dark and light theme, responsive layout for phone and desktop
 - Rate limit of 20 AI requests per hour per IP
