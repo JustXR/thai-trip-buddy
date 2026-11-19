@@ -183,6 +183,12 @@ html,*{scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--accent) 55%,
 .gem .hours svg{flex:none;width:18px;height:18px;margin-top:2px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .gem .map{display:inline-block;margin-top:10px;padding:6px 14px;border:1px solid var(--line);border-radius:999px;color:var(--text);text-decoration:none;font-size:.9rem;transition:background .15s,color .15s}
 .gem .map:hover,.gem .map:focus-visible{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.gem .gpic{margin:0 0 12px}
+.gem .gpic img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:12px;background:var(--line)}
+.gem .gpic figcaption{margin-top:4px;font-size:.72rem;line-height:1.3;color:var(--muted)}
+.gem .gpic figcaption a{color:inherit}
+.gem .gph{aspect-ratio:16/10;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,color-mix(in srgb,#00C8C8 45%,transparent),color-mix(in srgb,var(--accent) 28%,transparent))}
+.gem .gph svg{width:64px;height:64px;fill:none;stroke:var(--text);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;opacity:.75}
 @media (max-width:480px){.dock{gap:3px;padding:8px 6px}.dock button{width:40px}.dock .lbl{font-size:.56rem}}
 @media (max-width:360px){.dock button{width:36px}}
 
@@ -1154,7 +1160,36 @@ const GEMS = [
 ];
 const GEM_SVG = {"temple": "<line x1=\"3\" x2=\"21\" y1=\"22\" y2=\"22\"/><line x1=\"6\" x2=\"6\" y1=\"18\" y2=\"11\"/><line x1=\"10\" x2=\"10\" y1=\"18\" y2=\"11\"/><line x1=\"14\" x2=\"14\" y1=\"18\" y2=\"11\"/><line x1=\"18\" x2=\"18\" y1=\"18\" y2=\"11\"/><polygon points=\"12 2 20 7 4 7\"/>", "mountain": "<path d=\"m8 3 4 8 5-5 5 15H2L8 3z\"/>", "palm": "<path d=\"M12.5 22c0-6 .5-9 2.5-12\"/><path d=\"M15 10C13 5 8 5 5 8\"/><path d=\"M15 10C16 5 20 5 22 8\"/><path d=\"M15 10C11 9 8 11 7 14\"/><path d=\"M15 10C18 9 21 11 21 14\"/><path d=\"M3 22h18\"/>", "bike": "<circle cx=\"18.5\" cy=\"17.5\" r=\"3.5\"/><circle cx=\"5.5\" cy=\"17.5\" r=\"3.5\"/><circle cx=\"15\" cy=\"5\" r=\"1\"/><path d=\"M12 17.5V14l-3-3 4-3 2 3h2\"/>", "shop": "<path d=\"M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z\"/><path d=\"M3 6h18\"/><path d=\"M16 10a4 4 0 0 1-8 0\"/>", "food": "<path d=\"M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2\"/><path d=\"M7 2v20\"/><path d=\"M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7\"/>", "bridge": "<path d=\"M2 18h20\"/><path d=\"M4 18c0-6 4-9 8-9s8 3 8 9\"/><path d=\"M8 18v-4\"/><path d=\"M12 18V9\"/><path d=\"M16 18v-4\"/>", "pin": "<path d=\"M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z\"/><circle cx=\"12\" cy=\"10\" r=\"3\"/>", "building": "<path d=\"M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z\"/><path d=\"M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2\"/><path d=\"M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2\"/><path d=\"M10 6h4\"/><path d=\"M10 10h4\"/><path d=\"M10 14h4\"/><path d=\"M10 18h4\"/>"};
 const GEM_ICON = {"Wat Phumin": "temple", "Wat Phra That Pha Sorn Kaew": "temple", "Wat Pa Maha Chedi Kaew": "temple", "Koh Kood": "palm", "Ko Kradan": "palm", "Ko Yao Noi": "palm", "Ko Lipe": "palm", "Ko Tao": "palm", "Koh Surin": "palm", "Koh Phayam": "palm", "Khao Sok Ratchaprapha Dam (Cheow Lan Lake)": "mountain", "Sampheng Market (Talat Sampheng)": "shop", "Tuek Daeng Chatuchak (The Red Building)": "shop", "Phu Chi Fa": "mountain", "Pai Canyon": "mountain", "Talat Noi": "building", "Kudee Chin": "building", "Banthat Thong Road": "food", "Mon Bridge": "bridge", "Bang Kachao": "bike"};
-let gCat = "All";
+let gCat = "All", GEMPICS = {};
+// photo credits written by fetch_gem_photos.py (the cards work without them)
+try { fetch("gems/credits.json").then(r => r.ok ? r.json() : {}).then(m => { GEMPICS = m; renderGems(); }).catch(() => {}); } catch (e) {}
+function gemPlaceholder(g) {
+  // no photo: a coloured banner with the place's icon, so every card has the same layout
+  const ph = document.createElement("div"); ph.className = "gpic gph"; ph.setAttribute("aria-hidden", "true");
+  ph.insertAdjacentHTML("afterbegin", '<svg viewBox="0 0 24 24">' + GEM_SVG[GEM_ICON[g.name] || "pin"] + '</svg>');
+  return ph;
+}
+function gemPhoto(g) {
+  const pic = GEMPICS[g.name]; if (!pic || !pic.file) return gemPlaceholder(g);
+  const fig = document.createElement("figure"); fig.className = "gpic";
+  const im = document.createElement("img");
+  im.src = "gems/" + pic.file; im.alt = g.name + ", " + g.place; im.loading = "lazy";
+  im.onerror = () => fig.replaceWith(gemPlaceholder(g));
+  const cap = document.createElement("figcaption");
+  if (pic.caption) { cap.textContent = pic.caption; fig.append(im, cap); return fig; }  // own picture: custom caption
+  const author = (pic.author || "Unknown").slice(0, 60);
+  cap.append("Photo: " + author + ", ");
+  const lic = document.createElement("a");
+  lic.textContent = pic.license || "licence";
+  lic.href = pic.licenseUrl || pic.source || "#"; lic.target = "_blank"; lic.rel = "noopener noreferrer";
+  cap.append(lic, " via ");
+  const src = document.createElement("a");
+  src.textContent = "Wikimedia Commons";
+  src.href = pic.source || "#"; src.target = "_blank"; src.rel = "noopener noreferrer";
+  cap.append(src);
+  fig.append(im, cap);
+  return fig;
+}
 function renderGems() {
   const chips = $("gChips"); chips.textContent = "";
   ["All", ...new Set(GEMS.map(g => g.cat))].forEach(c => {
@@ -1181,6 +1216,8 @@ function renderGems() {
     const a = document.createElement("a"); a.className = "map"; a.textContent = "Open in Maps";
     a.href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(g.name + ", " + g.place + ", Thailand");
     a.target = "_blank"; a.rel = "noopener noreferrer";
+    const photo = gemPhoto(g);
+    if (photo) card.append(photo);
     card.append(tag, head, p, hr, a); list.appendChild(card);
   });
 }
