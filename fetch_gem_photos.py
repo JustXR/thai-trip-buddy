@@ -50,7 +50,7 @@ OVERRIDES = {
     "Sampheng Market (Talat Sampheng)": "Sampheng Lane",
     "Banthat Thong Road": "Banthat Thong Road",
     "Phu Chi Fa": "Phu Chi Fa Forest Park",
-    "Wat Pa Maha Chedi Kaew": "Wat Pa Maha Chedi Kaew",
+    "Naka Cave": "Phu Langka National Park",
     "Koh Phayam": "Ko Phayam",
     "Kudee Chin": "Kudi Chin",
     "Khao Sok Ratchaprapha Dam (Cheow Lan Lake)": "Ratchaprapha Dam",
